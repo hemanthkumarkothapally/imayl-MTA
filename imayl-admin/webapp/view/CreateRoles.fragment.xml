@@ -1,0 +1,119 @@
+<core:FragmentDefinition 
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:form="sap.ui.layout.form"
+>
+    <Dialog
+        id="CreateRolesDialog"
+        title="Roles"
+        contentWidth="70%"
+        contentHeight="60%"
+        class="CreateUserDialog"
+    >
+        <customHeader>
+            <Bar>
+                <contentLeft>
+                    <Title text="Create a Role" />
+                </contentLeft>
+                <contentRight>
+                    <Button
+                        icon="sap-icon://decline"
+                        type="Transparent"
+                        press=".onCreateEmailClosePress"
+                    />
+                </contentRight>
+            </Bar>
+        </customHeader>
+
+        <content>
+                    <l:Grid>
+                        <HBox justifyContent="SpaceBetween" alignItems="Center" alignContent="Center" height="3rem">
+                        <Label text="Code" required="true" showColon="true"/>
+                        <Input value="{Name}"/>
+                        </HBox>
+                        <HBox justifyContent="SpaceBetween" alignItems="Center" alignContent="Center" height="3rem">
+                        <Label text="Name" required="true" showColon="true"/>
+                        <Input value="{TemplateDescription}" />
+                        </HBox>
+                        <HBox justifyContent="SpaceBetween" alignItems="Center" alignContent="Center" height="3rem">
+                        <Label text="Status" showColon="true"/>
+                        <Select selectedKey="{StatusName}" >
+                            <core:Item key="1" text="Please Choose:"/>
+                            <core:Item key="Active" text="Active" />
+                            <core:Item key="InActive" text="InActive" />
+                           
+                        </Select>
+                        </HBox>
+                    </l:Grid>
+                    <IconTabBar id="permissionsTabBar" expandable="false" expanded="true" class="sapUiResponsiveContentPadding">
+			<items>
+				<IconTabFilter text="Operations" key="operations">
+					<VBox>
+						<CheckBox text="All Packages" selected="true" />
+						<CheckBox text="Log a Package" selected="true" />
+						<FlexBox alignItems="Center" class="sapUiTinyMarginBegin">
+							<CheckBox text="Create" selected="true" />
+						</FlexBox>
+						<FlexBox alignItems="Center" class="sapUiTinyMarginBegin">
+							<CheckBox text="Update" selected="true" />
+						</FlexBox>
+						<FlexBox alignItems="Center" class="sapUiTinyMarginBegin">
+							<CheckBox text="Void" selected="true" />
+						</FlexBox>
+						<CheckBox text="My Packages" selected="true" />
+						<CheckBox text="Reports" selected="true" />
+						<CheckBox text="User Log" selected="true" />
+						<CheckBox text="Email Editor" selected="true" />
+					</VBox>
+				</IconTabFilter>
+				
+				<IconTabFilter text="Set Up" key="setup">
+					<VBox>
+						<CheckBox text="Carriers" selected="true" />
+						<CheckBox text="Package Types" selected="true" />
+						<CheckBox text="Package Statuses" selected="true" />
+						<CheckBox text="Calendar" selected="true" />
+						<CheckBox text="Delivery Locations" selected="true" />
+						<CheckBox text="User Management" selected="true" />
+						<CheckBox text="Roles" selected="true" />
+					</VBox>
+				</IconTabFilter>
+				
+				<IconTabFilter text="Settings" key="settings">
+					<VBox>
+						<CheckBox text="Company Settings" selected="true" />
+						<CheckBox text="SLA Hours" selected="true" />
+						<CheckBox text="Date and Time Zone" selected="true" />
+					</VBox>
+				</IconTabFilter>
+				
+				<IconTabFilter  text="Tools" key="tools">
+					<VBox>
+						<CheckBox text="Import Data" selected="true" />
+						<CheckBox text="Invite Users" selected="true" />
+						<CheckBox text="Printer Configuration" selected="true" />
+						<CheckBox text="Field Configuration" selected="true" />
+						<CheckBox text="Email Configuration" selected="true" />
+					</VBox>
+				</IconTabFilter>
+			</items>
+		</IconTabBar>
+        </content>
+        <beginButton>
+            <Button
+                text="Cancel"
+                press=".onCreateUserFormClosePress"
+            />
+        </beginButton>
+
+        <endButton>
+            <Button
+                text="Save"
+                type="Emphasized"
+                icon="sap-icon://save"
+                press=".onAddNewData"
+            />
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

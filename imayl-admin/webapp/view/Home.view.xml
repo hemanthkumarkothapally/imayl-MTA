@@ -1,0 +1,3463 @@
+<mvc:View controllerName="com.db.admin.imayladmin.controller.Home"
+    xmlns:uxap="sap.uxap"
+    xmlns:cards="sap.f.cards"
+    xmlns:unified="sap.ui.unified"
+    xmlns:table="sap.ui.table"
+    xmlns:core="sap.ui.core"
+    xmlns:layout="sap.ui.layout"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:vk="sap.ui.vk"
+    xmlns:f="sap.f"
+    xmlns:tnt="sap.tnt"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:rowmodes="sap.ui.table.rowmodes"
+>
+    <tnt:ToolPage id="mainpage">
+        <tnt:header >
+            <tnt:ToolHeader class="headerclass" height="40px" >
+                <Button
+                    id="sideNavigationToggleButton"
+                    icon="sap-icon://menu2"
+                    type="Transparent"
+                    press=".onMenuButtonPress"
+                />
+                <Image
+                    id="logoId"
+                    src="https://cloud.imayl.com/Com/ProcessWeaver/IMAYL/Common/dist/img/logo.png"
+                />
+
+                
+            </tnt:ToolHeader>
+        </tnt:header>
+        <tnt:sideContent>
+            <tnt:SideNavigation
+                id="sidecontent"
+                expanded="true"
+                itemSelect="onItemSelect"
+                class="mySmallSideNav"
+            >
+                <tnt:NavigationList width="12rem">
+                    <tnt:NavigationListItem
+                        text="All Packages"
+                        icon="sap-icon://circle-task"
+                        press=".onQuickActionPress"
+                        expanded="true"
+                        key="1"
+                    />
+
+                    <tnt:NavigationListItem
+                        text="Receive a Package"
+                        icon="sap-icon://database"
+                        press=".onQuickActionPress"
+                        expanded="true"
+                        key="2"
+                    />
+                    <tnt:NavigationListItem
+                        text="My Packages"
+                        icon="sap-icon://donut-chart"
+                        press=".onQuickActionPress"
+                        expanded="true"
+                        key="3"
+                    />
+                    <tnt:NavigationListItem
+                        text="Reports"
+                        icon="sap-icon://inspection"
+                        press=".onQuickActionPress"
+                        expanded="false"
+                    >
+                        <tnt:NavigationListItem
+                            text="SLA Compliance"
+                            icon="sap-icon://tree"
+                            press=".onQuickActionPress"
+                            key="4a"
+                        />
+                        <tnt:NavigationListItem
+                            text="Pending Delivery"
+                            icon="sap-icon://tree"
+                            press=".onQuickActionPress"
+                            key="4b"
+                        />
+                        <tnt:NavigationListItem
+                            text="Researched Packages"
+                            icon="sap-icon://tree"
+                            press=".onQuickActionPress"
+                            key="4c"
+                        />
+                        <tnt:NavigationListItem
+                            text="User Productivity"
+                            icon="sap-icon://tree"
+                            press=".onQuickActionPress"
+                            key="4d"
+                        />
+                    </tnt:NavigationListItem>
+
+                    <tnt:NavigationListItem
+                        text="Set Up"
+                        icon="sap-icon://wrench"
+                        press=".onQuickActionPress"
+                        expanded="false"
+                    >
+                        <tnt:NavigationListItem
+                            text="Carriers"
+                            icon="sap-icon://shipping-status"
+                            press=".onQuickActionPress"
+                            key="5a"
+                        />
+                        <tnt:NavigationListItem
+                            text="Package Types"
+                            icon="sap-icon://product"
+                            press=".onQuickActionPress"
+                            key="5b"
+                        />
+                        <tnt:NavigationListItem
+                            text="Package Statuses"
+                            icon="sap-icon://status-positive"
+                            press=".onQuickActionPress"
+                            key="5c"
+                        />
+                        <tnt:NavigationListItem
+                            text="Locations"
+                            icon="sap-icon://locate-me"
+                            press=".onQuickActionPress"
+                            key="5d"
+                        />
+                        <tnt:NavigationListItem
+                            text="User Management"
+                            icon="sap-icon://person-placeholder"
+                            press=".onQuickActionPress"
+                            key="5e"
+                        />
+                        <tnt:NavigationListItem
+                            text="Calendar"
+                            icon="sap-icon://accelerated"
+                            press=".onQuickActionPress"
+                            key="5f"
+                        />
+                        <tnt:NavigationListItem
+                            text="Delivery Locations"
+                            icon="sap-icon://locate-me"
+                            press=".onQuickActionPress"
+                            key="5g"
+                        />
+                        <tnt:NavigationListItem
+                            text="Roles"
+                            icon="sap-icon://family-care"
+                            press=".onQuickActionPress"
+                            key="5h"
+                        />
+                    </tnt:NavigationListItem>
+                    <tnt:NavigationListItem
+                        text="User Log"
+                        icon="sap-icon://tree"
+                        press=".onQuickActionPress"
+                        expanded="true"
+                        key="6"
+                    />
+                    <tnt:NavigationListItem
+                        text="Email Editor"
+                        icon="sap-icon://email"
+                        press=".onQuickActionPress"
+                        expanded="true"
+                        key="7"
+                    />
+                </tnt:NavigationList>
+            </tnt:SideNavigation>
+        </tnt:sideContent>
+        <tnt:mainContents>
+            <NavContainer
+                id="maincontainer"
+                initialPage="AllPackagespage"
+            >
+                <pages>
+                    <Page id="AllPackagespage">
+                        <customHeader>
+                            <Toolbar>
+                                <Title
+                                    text="All Packages"
+                                    level="H1"
+                                />
+                                <ToolbarSpacer />
+
+                                <!-- <Button
+                                    icon="sap-icon://refresh"
+                                    type="Critical"
+                                /> -->
+                                <Button
+                                    icon="sap-icon://filter"
+                                    text="Filter"
+                                    type="Emphasized"
+                                    press="onFilterselection"
+                                />
+                                <Button
+                                    icon="sap-icon://add"
+                                    type="Emphasized"
+                                    press="onAddReceiveAPackage"
+                                />
+                                <!-- <Button
+                                    icon="sap-icon://action-settings"
+                                    type="Accept"
+                                /> -->
+                            </Toolbar>
+                        </customHeader>
+                        <Panel >
+                            <!-- <Bar>
+                                <contentLeft> -->
+                                <HBox justifyContent="SpaceBetween">
+                                    <Title
+                                        text="Total Packages: 0 in Last {
+                                parts: [
+                                         {path: 'requestpackageModel>/popoverfromdate'},
+                                          {path: 'requestpackageModel>/popovertoDate'}
+                                        ],
+                                        formatter: '.calculateDays'
+                                } Days"
+                                    />
+                                <!-- </contentLeft>
+                                <contentRight> -->
+                                    <Title
+                                        text="{
+                                parts: [
+                                         {path: 'requestpackageModel>/popoverfromdate'},
+                                          {path: 'requestpackageModel>/popovertoDate'}
+                                        ],
+                                        formatter: '.formatDateRange'
+                                }"
+                                    />
+                                    </HBox>
+                                    <!-- <Title text="{requestpackageModel>/popoverfromdate} - {requestpackageModel>/popovertoDate}" /> -->
+                                <!-- </contentRight>
+                            </Bar> -->
+                            <HBox
+                                width="100%"
+                                justifyContent="SpaceAround"
+                            >
+                                <GenericTile
+                                    class="allpackagesReceived"
+                                    header="Received"
+                                    frameType="TwoByHalf"
+                                    press="press"
+                                    width="12rem"
+                                >
+                                    <TileContent>
+                                        <NumericContent
+                                            value="12"
+                                            withMargin="false"
+                                        />
+                                    </TileContent>
+                                </GenericTile>
+                                <GenericTile
+                                    class="allpackagesTender"
+                                    header="Tender"
+                                    frameType="TwoByHalf"
+                                    press="press"
+                                    width="12rem"
+                                >
+                                    <TileContent
+                                        unit="Unit"
+                                        footer="Footer Text"
+                                    >
+                                        <NumericContent
+                                            value="12"
+                                            withMargin="false"
+                                        />
+                                    </TileContent>
+                                </GenericTile>
+                                <GenericTile
+                                    class="allpackagesResearch"
+                                    header="Research"
+                                    frameType="TwoByHalf"
+                                    press="press"
+                                    width="12rem"
+                                >
+                                    <TileContent
+                                        unit="Unit"
+                                        footer="Footer Text"
+                                    >
+                                        <NumericContent
+                                            value="12"
+                                            withMargin="false"
+                                        />
+                                    </TileContent>
+                                </GenericTile>
+                                <GenericTile
+                                    class="allpackagesDelivered"
+                                    header="Delivered"
+                                    frameType="TwoByHalf"
+                                    press="press"
+                                    width="12rem"
+                                >
+                                    <TileContent
+                                        unit="Unit"
+                                        footer="Footer Text"
+                                    >
+                                        <NumericContent
+                                            value="12"
+                                            withMargin="false"
+                                        />
+                                    </TileContent>
+                                </GenericTile>
+                                <GenericTile
+                                    class="allpackagesForward"
+                                    header="Forward"
+                                    frameType="TwoByHalf"
+                                    press="press"
+                                    width="12rem"
+                                >
+                                    <TileContent
+                                        unit="Unit"
+                                        footer="Footer Text"
+                                    >
+                                        <NumericContent
+                                            value="12"
+                                            withMargin="false"
+                                        />
+                                    </TileContent>
+                                </GenericTile>
+                            </HBox>
+                        </Panel>
+                        <ToolbarSpacer />
+                        <table:Table selectionMode="None">
+                            <table:extension>
+                                <OverflowToolbar>
+                                    <ToolbarSpacer />
+                                    <Button
+                                        icon="sap-icon://action-settings"
+                                        press="onOpenColumnftlter"
+                                    />
+                                </OverflowToolbar>
+                            </table:extension>
+                            <table:columns>
+                                <table:Column
+                                    width="9rem"
+                                    filterProperty="color"
+                                >
+                                    <Label text="Color Code" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column
+                                    width="9rem"
+                                    filterProperty="color"
+                                >
+                                    <Label text="Received Date" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column
+                                    width="9rem"
+                                    filterProperty="color"
+                                >
+                                    <Label text="Updated Date" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column
+                                    width="9rem"
+                                    filterProperty="color"
+                                >
+                                    <Label text="Package Logger" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column
+                                    width="9rem"
+                                    filterProperty="color"
+                                >
+                                    <Label text="Ship From" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column
+                                    width="9rem"
+                                    filterProperty="color"
+                                >
+                                    <Label text="From Address" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column
+                                    width="9rem"
+                                    filterProperty="color"
+                                >
+                                    <Label text="Ship To" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column
+                                    width="9rem"
+                                    filterProperty="color"
+                                >
+                                    <Label text="To Address" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column
+                                    width="9rem"
+                                    filterProperty="color"
+                                >
+                                    <Label text="Carrier" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column
+                                    width="9rem"
+                                    filterProperty="color"
+                                >
+                                    <Label text="Ext #" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column
+                                    width="9rem"
+                                    filterProperty="color"
+                                >
+                                    <Label text="Int #" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column
+                                    width="9rem"
+                                    filterProperty="color"
+                                >
+                                    <Label text="Status" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column
+                                    width="9rem"
+                                    filterProperty="color"
+                                >
+                                    <Label text="Ref #" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column
+                                    width="9rem"
+                                    filterProperty="color"
+                                >
+                                    <Label text="Ref Date" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column
+                                    width="9rem"
+                                    filterProperty="color"
+                                >
+                                    <Label text="Notes" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column
+                                    width="9rem"
+                                    filterProperty="color"
+                                >
+                                    <Label text="Priority" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column
+                                    width="9rem"
+                                    filterProperty="color"
+                                >
+                                    <Label text="Storage Location" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column
+                                    width="9rem"
+                                    filterProperty="color"
+                                >
+                                    <Label text="Bin" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column
+                                    width="9rem"
+                                    filterProperty="color"
+                                >
+                                    <Label text="Delivery Location" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column
+                                    width="9rem"
+                                    filterProperty="color"
+                                >
+                                    <Label text="Package Type" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                            </table:columns>
+                        </table:Table>
+                    </Page>
+                    <Page id="MyPackagespage">
+                        <customHeader>
+                            <Toolbar>
+                                <Title
+                                    text="My Packages
+"
+                                    level="H1"
+                                />
+                                <ToolbarSpacer />
+
+                                <!-- <Button
+                                    icon="sap-icon://refresh"
+                                    type="Critical"
+                                /> -->
+                                <Button
+                                    icon="sap-icon://filter"
+                                    text="Filter"
+                                    type="Emphasized"
+                                    press="onFilterselection"
+                                />
+                                <Button
+                                    icon="sap-icon://add"
+                                    type="Emphasized"
+                                    press="onAddReceiveAPackage"
+                                />
+                                <!-- <Button
+                                    icon="sap-icon://action-settings"
+                                    type="Accept"
+                                /> -->
+                            </Toolbar>
+                        </customHeader>
+                        <Panel>
+                            <Bar>
+                                <contentLeft>
+                                    <Title
+                                        text="Total Packages: 0 in Last {
+                                parts: [
+                                         {path: 'requestpackageModel>/popoverfromdate'},
+                                          {path: 'requestpackageModel>/popovertoDate'}
+                                        ],
+                                        formatter: '.calculateDays'
+                                } Days"
+                                    />
+                                </contentLeft>
+                                <contentRight>
+                                    <Title
+                                        text="{
+                                parts: [
+                                         {path: 'requestpackageModel>/popoverfromdate'},
+                                          {path: 'requestpackageModel>/popovertoDate'}
+                                        ],
+                                        formatter: '.formatDateRange'
+                                }"
+                                    />
+                                    <!-- <Title text="{requestpackageModel>/popoverfromdate} - {requestpackageModel>/popovertoDate}" /> -->
+                                </contentRight>
+                            </Bar>
+                            <HBox
+                                fitContainer="true"
+                                width="100%"
+                                justifyContent="SpaceAround"
+                            >
+                                <GenericTile
+                                    class="allpackagesReceived"
+                                    header="Received"
+                                    frameType="TwoByHalf"
+                                    press="press"
+                                    width="13rem"
+                                >
+                                    <TileContent>
+                                        <NumericContent
+                                            value="12"
+                                            withMargin="false"
+                                        />
+                                    </TileContent>
+                                </GenericTile>
+                                <GenericTile
+                                    class="allpackagesTender"
+                                    header="Tender"
+                                    frameType="TwoByHalf"
+                                    press="press"
+                                    width="12rem"
+                                >
+                                    <TileContent
+                                        unit="Unit"
+                                        footer="Footer Text"
+                                    >
+                                        <NumericContent
+                                            value="12"
+                                            withMargin="false"
+                                        />
+                                    </TileContent>
+                                </GenericTile>
+                                <GenericTile
+                                    class="allpackagesResearch"
+                                    header="Research"
+                                    frameType="TwoByHalf"
+                                    press="press"
+                                    width="12rem"
+                                >
+                                    <TileContent
+                                        unit="Unit"
+                                        footer="Footer Text"
+                                    >
+                                        <NumericContent
+                                            value="12"
+                                            withMargin="false"
+                                        />
+                                    </TileContent>
+                                </GenericTile>
+                                <GenericTile
+                                    class="allpackagesDelivered"
+                                    header="Delivered"
+                                    frameType="TwoByHalf"
+                                    press="press"
+                                    width="12rem"
+                                >
+                                    <TileContent
+                                        unit="Unit"
+                                        footer="Footer Text"
+                                    >
+                                        <NumericContent
+                                            value="12"
+                                            withMargin="false"
+                                        />
+                                    </TileContent>
+                                </GenericTile>
+                                <GenericTile
+                                    class="allpackagesForward"
+                                    header="Forward"
+                                    frameType="TwoByHalf"
+                                    press="press"
+                                    width="12rem"
+                                >
+                                    <TileContent
+                                        unit="Unit"
+                                        footer="Footer Text"
+                                    >
+                                        <NumericContent
+                                            value="12"
+                                            withMargin="false"
+                                        />
+                                    </TileContent>
+                                </GenericTile>
+                            </HBox>
+                        </Panel>
+                        <ToolbarSpacer />
+                        <table:Table selectionMode="None">
+                            <table:extension>
+                                <OverflowToolbar>
+                                    <ToolbarSpacer />
+                                    <Button
+                                        icon="sap-icon://action-settings"
+                                        press="onOpenColumnftlter"
+                                    />
+                                </OverflowToolbar>
+                            </table:extension>
+                            <table:columns>
+                                <table:Column
+                                    width="9rem"
+                                    filterProperty="color"
+                                >
+                                    <Label text="Color Code" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column
+                                    width="9rem"
+                                    filterProperty="color"
+                                >
+                                    <Label text="Received Date" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column
+                                    width="9rem"
+                                    filterProperty="color"
+                                >
+                                    <Label text="Updated Date" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column
+                                    width="9rem"
+                                    filterProperty="color"
+                                >
+                                    <Label text="Ship From" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column
+                                    width="9rem"
+                                    filterProperty="color"
+                                >
+                                    <Label text="From Address" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column
+                                    width="9rem"
+                                    filterProperty="color"
+                                >
+                                    <Label text="To Address" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column
+                                    width="9rem"
+                                    filterProperty="color"
+                                >
+                                    <Label text="Carrier" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column
+                                    width="9rem"
+                                    filterProperty="color"
+                                >
+                                    <Label text="Ext #" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column
+                                    width="9rem"
+                                    filterProperty="color"
+                                >
+                                    <Label text="Int #" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column
+                                    width="9rem"
+                                    filterProperty="color"
+                                >
+                                    <Label text="Status" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column
+                                    width="9rem"
+                                    filterProperty="color"
+                                >
+                                    <Label text="Ref #" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column
+                                    width="9rem"
+                                    filterProperty="color"
+                                >
+                                    <Label text="Ref Date" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column
+                                    width="9rem"
+                                    filterProperty="color"
+                                >
+                                    <Label text="Delivery Location" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column
+                                    width="9rem"
+                                    filterProperty="color"
+                                >
+                                    <Label text="Notes" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                            </table:columns>
+                        </table:Table>
+                    </Page>
+
+                    <Page
+                        id="ReceiveaPackage_main"
+                        visible="true"
+                    >
+                        <customHeader>
+                            <Toolbar>
+                                <Title
+                                    text="Receive a Package"
+                                    level="H1"
+                                />
+                                <ToolbarSpacer />
+
+                                <!-- <Button
+                                    icon="sap-icon://refresh"
+                                    type="Critical"
+                                /> -->
+                                <Button
+                                    icon="sap-icon://filter"
+                                    text="Filter"
+                                    type="Emphasized"
+                                    press="onFilterselection"
+                                />
+                                <Button
+                                    icon="sap-icon://add"
+                                    type="Emphasized"
+                                    press="onAddReceiveAPackage"
+                                />
+                                <!-- <Button
+                                    icon="sap-icon://action-settings"
+                                    type="Accept"
+                                /> -->
+                            </Toolbar>
+                        </customHeader>
+                        <Panel>
+                            <Bar>
+                                <contentLeft>
+                                    <Title
+                                        text="Total Packages: 0 in Last {
+                                parts: [
+                                         {path: 'requestpackageModel>/popoverfromdate'},
+                                          {path: 'requestpackageModel>/popovertoDate'}
+                                        ],
+                                        formatter: '.calculateDays'
+                                } Days"
+                                    />
+                                </contentLeft>
+                                <contentRight>
+                                    <Title
+                                        text="{
+                                parts: [
+                                         {path: 'requestpackageModel>/popoverfromdate'},
+                                          {path: 'requestpackageModel>/popovertoDate'}
+                                        ],
+                                        formatter: '.formatDateRange'
+                                }"
+                                    />
+                                    <!-- <Title text="{requestpackageModel>/popoverfromdate} - {requestpackageModel>/popovertoDate}" /> -->
+                                </contentRight>
+                            </Bar>
+                            <HBox
+                                width="100%"
+                                justifyContent="SpaceAround"
+                            >
+                                <GenericTile
+                                    class="allpackages"
+                                    header="All Other Packages"
+                                    frameType="TwoByHalf"
+                                    press="press"
+                                    width="32rem"
+                                >
+                                    <TileContent
+                                        unit="Unit"
+                                        footer="Footer Text"
+                                    >
+                                        <NumericContent
+                                            value="12"
+                                            withMargin="false"
+                                        />
+                                    </TileContent>
+                                </GenericTile>
+                                <GenericTile
+                                    class="MissingData"
+                                    header="Missing Data Packages"
+                                    frameType="TwoByHalf"
+                                    press="press"
+                                    width="32rem"
+                                >
+                                    <TileContent
+                                        unit="Unit"
+                                        footer="Footer Text"
+                                    >
+                                        <NumericContent
+                                            value="12"
+                                            withMargin="false"
+                                        />
+                                    </TileContent>
+                                </GenericTile>
+                            </HBox>
+                        </Panel>
+                        <ToolbarSpacer />
+                        <Table>
+                            <columns>
+                                <Column>
+                                    <Label text="Color Code" />
+                                </Column>
+                                <Column>
+                                    <Label text="Status" />
+                                </Column>
+                                <Column>
+                                    <Label text="Action" />
+                                </Column>
+                            </columns>
+                            <items>
+                                <ColumnListItem>
+                                    <Text />
+                                    <ComboBox selectedKey="all">
+                                        <items>
+                                            <core:Item
+                                                key="all"
+                                                text="All"
+                                            />
+                                            <core:Item
+                                                key="received"
+                                                text="Received"
+                                            />
+                                        </items>
+                                    </ComboBox>
+                                    <Text />
+                                </ColumnListItem>
+                                <ColumnListItem>
+                                    <core:Icon
+                                        src="sap-icon://color-fill"
+                                        color="green"
+                                    />
+                                    <Text text="Received" />
+                                    <cells>
+                                        <HBox>
+                                            <Button
+                                                text="Edit"
+                                                type="Transparent"
+                                            />
+                                            <Button
+                                                text="Print Lable"
+                                                type="Transparent"
+                                            />
+                                        </HBox>
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </Page>
+                    <Page
+                        id="ReceiveaPackage_form"
+                        visible="true"
+                    >
+                        <customHeader>
+                            <Toolbar>
+                                <Title text="Receive a Package" />
+                                <ToolbarSpacer />
+                                <Button
+                                    icon="sap-icon://decline"
+                                    press="oncancel"
+                                />
+                            </Toolbar>
+                        </customHeader>
+                        
+                        <content>
+                            <VBox width="100%">
+                                <Panel class="sapUiSmallMargin" width="97%">
+                                    <layout:Grid >
+                                        <VBox>
+                                            <Label text="Date" />
+                                            <DatePicker
+                                                value="{path: 'requestpackageModel>/packageformDate', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'MM/dd/yyyy' }}"
+                                                valueFormat="MM/dd/yyyy"
+                                                displayFormat="MM/dd/yyyy"
+                                            />
+                                        </VBox>
+                                        <VBox>
+                                            <Label text="Carrier Tracking #" />
+                                            <Input
+                                                type="Text"
+                                                showValueHelp="true"
+                                                valueHelpIconSrc="sap-icon://search"
+                                            />
+                                        </VBox>
+                                        <VBox>
+                                            <Label text="Tracking Number" />
+                                            <Input
+                                                type="Text"
+                                                showValueHelp="true"
+                                                valueHelpIconSrc="sap-icon://search"
+                                            />
+                                        </VBox>
+                                        <VBox>
+                                            <Label text="Carrier" />
+                                            <ComboBox>
+                                                <core:Item
+                                                    key="1"
+                                                    text="Los Vegas Parcel"
+                                                />
+                                            </ComboBox>
+                                        </VBox>
+                                        <VBox>
+                                            <Label text="Total Pieces" />
+                                            <Input
+                                                value="1"
+                                                type="Number"
+                                            />
+                                        </VBox>
+                                    </layout:Grid>
+                                </Panel>
+                                    <layout:Grid defaultSpan="L6 M6 S12">
+                                        <Panel
+                                            expanded="true"
+                                            expandable="true"
+                                            headerText="Ship From"
+                                            class="formpanel"
+                                        >
+                                            <form:SimpleForm
+                                                layout="ResponsiveGridLayout"
+                                                width="100%"
+                                                emptySpanL="0"
+                                                labelSpanL="4"
+                                                columnsL="2"
+                                                adjustLabelSpan="false"
+                                                editable="true"
+                                            >
+                                                <form:content>
+                                                    <Label text="First Name" />
+                                                    <Input
+                                                        placeholder="First Name"
+                                                    />
+                                                    <Label text="Last Name" />
+                                                    <Input
+                                                        placeholder="Last Name"
+                                                    />
+                                                    <Label
+                                                        text="Company Name"
+                                                    />
+                                                    <Input
+                                                        placeholder="Company Name"
+                                                    />
+                                                    <Label text="Email ID" />
+                                                    <Input
+                                                        placeholder="Email ID"
+                                                    />
+                                                    <Label
+                                                        text="MailStop/Building"
+                                                    />
+                                                    <Input
+                                                        placeholder="MailStop/Building"
+                                                    />
+                                                    <Label text="Address 1" />
+                                                    <Input
+                                                        placeholder="Address 1"
+                                                    />
+                                                    <Label text="Address 2" />
+                                                    <Input
+                                                        placeholder="Address 2"
+                                                    />
+                                                    <Label text="City" />
+                                                    <Input placeholder="City" />
+                                                    <Label text="State" />
+                                                    <Input
+                                                        placeholder="State"
+                                                    />
+                                                    <Label text="Zipcode" />
+                                                    <Input
+                                                        placeholder="Zipcode"
+                                                    />
+                                                    <Label text="Country" />
+                                                    <Select>
+                                                        <core:Item
+                                                            key="IN"
+                                                            text="India"
+                                                        />
+                                                        <core:Item
+                                                            key="US"
+                                                            text="USA"
+                                                        />
+                                                    </Select>
+                                                    <Label text="Phone" />
+                                                    <Input
+                                                        placeholder="Phone"
+                                                    />
+                                                </form:content>
+                                            </form:SimpleForm>
+                                        </Panel>
+                                        <Panel expanded="true" expandable="true" class="formpanel">
+                                            <headerToolbar>
+                                                <OverflowToolbar>
+                                                    <Title text="Ship To" />
+                                                    <ToolbarSpacer />
+                                                    <Button
+                                                        icon="sap-icon://search"
+                                                    />
+                                                </OverflowToolbar>
+                                            </headerToolbar>
+                                            <form:SimpleForm
+                                                layout="ResponsiveGridLayout"
+                                                editable="true"
+                                                width="100%"
+                                            >
+                                                <Label text="First Name" />
+                                                <Input
+                                                    placeholder="First Name"
+                                                />
+                                                <Label text="Last Name" />
+                                                <Input
+                                                    placeholder="Last Name"
+                                                />
+                                                <Label text="Company Name" />
+                                                <Input
+                                                    placeholder="Company Name"
+                                                />
+                                                <Label text="Email ID" />
+                                                <Input placeholder="Email ID" />
+                                                <Label
+                                                    text="MailStop/Building"
+                                                />
+                                                <Input
+                                                    placeholder="MailStop/Building"
+                                                />
+                                                <Label text="Address 1" />
+                                                <Input
+                                                    placeholder="Address 1"
+                                                />
+                                                <Label text="Address 2" />
+                                                <Input
+                                                    placeholder="Address 2"
+                                                />
+                                                <Label text="City" />
+                                                <Input placeholder="City" />
+                                                <Label text="State" />
+                                                <Input placeholder="State" />
+                                                <Label text="Zipcode" />
+                                                <Input placeholder="Zipcode" />
+                                                <Label text="Country" />
+                                                <Select>
+                                                    <core:Item
+                                                        key="IN"
+                                                        text="India"
+                                                    />
+                                                    <core:Item
+                                                        key="US"
+                                                        text="USA"
+                                                    />
+                                                    <!-- Add more -->
+                                                </Select>
+                                                <Label text="Phone" />
+                                                <Input placeholder="Phone" />
+                                            </form:SimpleForm>
+                                        </Panel>
+                                    </layout:Grid>
+                                    <table:Table
+                                        id="formtable"
+                                        class="formtable"
+                                        width="100%"
+                                        columnHeaderVisible="true"
+                                        rows="{requestpackageModel>/tableData}"
+                                        selectionMode="None"
+                                        alternateRowColors="true"
+                                    >
+                                        <!-- <table:rowMode>
+                                    <rowmodes:Auto
+                                        maxRowCount="{requestpackageModel>/requestapackageformtablecount}"
+                                    />
+                                </table:rowMode> -->
+                                        <table:rowMode>
+                                            <rowmodes:Fixed rowCount="5" />
+                                        </table:rowMode>
+                                        <table:extension>
+                                            <OverflowToolbar style="Clear">
+                                                <Title
+                                                    id="title"
+                                                    text="Products"
+                                                />
+
+                                                <ToolbarSpacer />
+                                                <SearchField
+                                                    placeholder="Filter"
+                                                    value="{ui>/globalFilter}"
+                                                    search="filterGlobally"
+                                                    width="15rem"
+                                                />
+                                                <Button
+                                                    icon="sap-icon://decline"
+                                                    tooltip="Clear all filters"
+                                                    press="clearAllFilters"
+                                                />
+                                                <Button
+                                                    icon="sap-icon://action-settings"
+                                                    press="onOpenColumnftlter"
+                                                />
+                                            </OverflowToolbar>
+                                        </table:extension>
+                                        <table:columns>
+                                            <table:Column width="7rem">
+                                                <Label text="Image" />
+                                                <table:template>
+                                                    <Text
+                                                        text="{requestpackageModel>Image}"
+                                                    />
+                                                </table:template>
+                                            </table:Column>
+                                            <table:Column width="8rem">
+                                                <Label text="Status" />
+                                                <table:template>
+                                                    <ComboBox
+                                                        selectedKey="{requestpackageModel>Status}"
+                                                    >
+                                                        <items>
+                                                            <core:Item
+                                                                key="Received"
+                                                                text="Received"
+                                                            />
+                                                            <core:Item
+                                                                key="Tender"
+                                                                text="Tender"
+                                                            />
+                                                            <core:Item
+                                                                key="Research"
+                                                                text="Research"
+                                                            />
+                                                            <core:Item
+                                                                key="Delivered"
+                                                                text="Delivered"
+                                                            />
+                                                            <core:Item
+                                                                key="Forward"
+                                                                text="Forward"
+                                                            />
+                                                        </items>
+                                                    </ComboBox>
+                                                </table:template>
+                                            </table:Column>
+                                            <table:Column width="8rem">
+                                                <Label text="Int #" />
+                                                <table:template>
+                                                    <Text
+                                                        text="{requestpackageModel>IntNumber}"
+                                                    />
+                                                </table:template>
+                                            </table:Column>
+                                            <table:Column
+                                                filterProperty="Ref"
+                                                width="8rem"
+                                            >
+                                                <Label text="Ref #" />
+                                                <table:template>
+                                                    <Input
+                                                        value="{requestpackageModel>RefNumber}"
+                                                        type="Text"
+                                                    />
+                                                </table:template>
+                                            </table:Column>
+                                            <table:Column width="9rem">
+                                                <Label text="Ref Date" />
+                                                <table:template>
+                                                    <DatePicker
+                                                        value="{requestpackageModel>RefDate}"
+                                                        valueFormat="MM/dd/yyyy"
+                                                        displayFormat="MM/dd/yyyy"
+                                                    />
+                                                </table:template>
+                                            </table:Column>
+                                            <table:Column width="8rem">
+                                                <Label text="Package" />
+                                                <table:template>
+                                                    <Text text="" />
+                                                </table:template>
+                                            </table:Column>
+                                            <table:Column width="8rem">
+                                                <Label
+                                                    text="Delivery Location"
+                                                />
+                                                <table:template>
+                                                    <ComboBox
+                                                        selectedKey="{requestpackageModel>Status}"
+                                                    >
+                                                        <items>
+                                                            <core:Item
+                                                                key="Received"
+                                                                text="Received"
+                                                            />
+                                                            <core:Item
+                                                                key="Tender"
+                                                                text="Tender"
+                                                            />
+                                                            <core:Item
+                                                                key="Research"
+                                                                text="Research"
+                                                            />
+                                                            <core:Item
+                                                                key="Delivered"
+                                                                text="Delivered"
+                                                            />
+                                                            <core:Item
+                                                                key="Forward"
+                                                                text="Forward"
+                                                            />
+                                                        </items>
+                                                    </ComboBox>
+                                                </table:template>
+                                            </table:Column>
+                                            <table:Column width="7rem">
+                                                <Label text="Weight" />
+                                                <table:template>
+                                                    <Input
+                                                        value="{requestpackageModel>Weight}"
+                                                        type="Number"
+                                                    />
+                                                </table:template>
+                                            </table:Column>
+                                            <table:Column width="7rem">
+                                                <Label text="Value" />
+                                                <table:template>
+                                                    <Input
+                                                        value="{requestpackageModel>Status}"
+                                                        type="Number"
+                                                    />
+                                                </table:template>
+                                            </table:Column>
+                                            <table:Column width="7rem">
+                                                <Label text="Mail Box" />
+                                                <table:template>
+                                                    <Input
+                                                        value="{requestpackageModel>Status}"
+                                                        type="Text"
+                                                    />
+                                                </table:template>
+                                            </table:Column>
+                                            <table:Column width="8rem">
+                                                <Label
+                                                    text="Storage Location"
+                                                />
+                                                <table:template>
+                                                    <Input
+                                                        value="{requestpackageModel>Status}"
+                                                        type="Text"
+                                                    />
+                                                </table:template>
+                                            </table:Column>
+                                            <table:Column width="8rem">
+                                                <Label text="Bin" />
+                                                <table:template>
+                                                    <Input
+                                                        value="{requestpackageModel>Status}"
+                                                        type="Text"
+                                                    />
+                                                </table:template>
+                                            </table:Column>
+                                            <table:Column width="4rem">
+                                                <Label text="Notes" />
+                                                <table:template>
+                                                    <core:Icon
+                                                        src="sap-icon://notes"
+                                                        press="onAddNotes"
+                                                    />
+                                                </table:template>
+                                            </table:Column>
+                                            <table:Column width="4rem">
+                                                <Label text="Action" />
+                                                <table:template>
+                                                    <HBox
+                                                        justifyContent="Center"
+                                                    >
+                                                        <core:Icon
+                                                            src="sap-icon://sys-add"
+                                                            color="blue"
+                                                            press="onAddRow"
+                                                        />
+                                                        <core:Icon
+                                                            src="sap-icon://sys-minus"
+                                                            color="red"
+                                                            press="onDeleteRow"
+                                                        />
+                                                    </HBox>
+                                                </table:template>
+                                            </table:Column>
+                                        </table:columns>
+                                    </table:Table>
+
+                                    <HBox
+                                        height="6rem"
+                                        justifyContent="SpaceBetween"
+                                        alignItems="Center"
+                                    >
+                                        <Button
+                                            text="Cancel"
+                                            press="oncancel"
+                                        />
+                                        <ToolbarSpacer />
+                                        <Button
+                                            text="Save"
+                                            icon="sap-icon://save"
+                                            type="Emphasized"
+                                        />
+                                    </HBox>
+                                
+                            </VBox>
+                        </content>
+                    </Page>
+
+                    <Page id="SLACompliancepage">
+                        <customHeader>
+                            <Toolbar>
+                                <Title
+                                    text="SLA Compliance"
+                                    level="H1"
+                                />
+                                <ToolbarSpacer />
+
+                                <Button
+                                    icon="sap-icon://search"
+                                    type="Emphasized"
+                                    press="onAddReceiveAPackage"
+                                    tooltip="Search"
+                                />
+                                <Button
+                                    icon="sap-icon://refresh"
+                                    tooltip="Refresh"
+                                    type="Emphasized"
+                                />
+                            </Toolbar>
+                        </customHeader>
+                        <layout:Grid defaultSpan="XL6 S12">
+                            <VBox
+                                justifyContent="Center"
+                                height="4rem"
+                            >
+                                <Label text="From Date" />
+                                <DatePicker />
+                            </VBox>
+                            <VBox
+                                justifyContent="Center"
+                                height="4rem"
+                            >
+                                <Label text="To Date" />
+                                <DatePicker />
+                            </VBox>
+                        </layout:Grid>
+                        <table:Table selectionMode="None">
+                            <!-- <table:extension><OverflowToolbar >
+                        <ToolbarSpacer ></ToolbarSpacer>
+                        <Button
+                                                    icon="sap-icon://action-settings"
+                                                    press="onOpenColumnftlter"
+                                                />
+                        </OverflowToolbar></table:extension> -->
+                            <table:columns>
+                                <table:Column filterProperty="color">
+                                    <Label text="Color Code" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="color">
+                                    <Label text="Ext Tracking #" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="color">
+                                    <Label text="Int Tracking #" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="color">
+                                    <Label text="Status" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+
+                                <table:Column filterProperty="color">
+                                    <Label text="Last Handled By" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="color">
+                                    <Label text="Received Date" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="color">
+                                    <Label text="Updated Date" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="color">
+                                    <Label text="Time Since Received" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                            </table:columns>
+                        </table:Table>
+                    </Page>
+
+                    <Page id="PendingDeliverypage">
+                        <customHeader>
+                            <Toolbar>
+                                <Title
+                                    text="Pending Delivery"
+                                    level="H1"
+                                />
+                                <ToolbarSpacer />
+
+                                <Button
+                                    icon="sap-icon://search"
+                                    type="Emphasized"
+                                    press="onAddReceiveAPackage"
+                                    tooltip="Search"
+                                />
+                                <Button
+                                    icon="sap-icon://refresh"
+                                    tooltip="Refresh"
+                                    type="Emphasized"
+                                />
+                            </Toolbar>
+                        </customHeader>
+                        <layout:Grid defaultSpan="XL6 S12">
+                            <VBox
+                                justifyContent="Center"
+                                height="4rem"
+                            >
+                                <Label text="From Date" />
+                                <DatePicker />
+                            </VBox>
+                            <VBox
+                                justifyContent="Center"
+                                height="4rem"
+                            >
+                                <Label text="To Date" />
+                                <DatePicker />
+                            </VBox>
+                        </layout:Grid>
+                        <table:Table selectionMode="None">
+                            <table:columns>
+                                <table:Column filterProperty="color">
+                                    <Label text="Color Code" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="color">
+                                    <Label text="Ext Tracking #" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="color">
+                                    <Label text="Int Tracking #" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="color">
+                                    <Label text="Status" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+
+                                <table:Column filterProperty="color">
+                                    <Label text="Last Handled By" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="color">
+                                    <Label text="Received Date" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="color">
+                                    <Label text="Updated Date" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="color">
+                                    <Label text="Time Since Received" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                            </table:columns>
+                        </table:Table>
+                    </Page>
+
+                    <Page id="ResearchedPackagespage">
+                        <customHeader>
+                            <Toolbar>
+                                <Title
+                                    text="Researched Packages"
+                                    level="H1"
+                                />
+                                <ToolbarSpacer />
+
+                                <Button
+                                    icon="sap-icon://search"
+                                    type="Emphasized"
+                                    press="onAddReceiveAPackage"
+                                    tooltip="Search"
+                                />
+                                <Button
+                                    icon="sap-icon://refresh"
+                                    tooltip="Refresh"
+                                    type="Emphasized"
+                                />
+                            </Toolbar>
+                        </customHeader>
+                        <Panel>
+                            <layout:Grid defaultSpan="XL6 S12">
+                                <VBox
+                                    justifyContent="Center"
+                                    height="4rem"
+                                >
+                                    <Label text="From Date" />
+                                    <DatePicker />
+                                </VBox>
+                                <VBox
+                                    justifyContent="Center"
+                                    height="4rem"
+                                >
+                                    <Label text="To Date" />
+                                    <DatePicker />
+                                </VBox>
+                            </layout:Grid>
+                        </Panel>
+                        <table:Table selectionMode="None">
+                            <table:columns>
+                                <table:Column filterProperty="color">
+                                    <Label text="Ext Tracking #" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="color">
+                                    <Label text="Int Tracking #" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="color">
+                                    <Label text="Recipient Name" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="color">
+                                    <Label text="Status" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="color">
+                                    <Label text="Research Start Time" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="color">
+                                    <Label text="Reason" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="color">
+                                    <Label text="Researched Time" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                            </table:columns>
+                        </table:Table>
+                    </Page>
+
+                    <Page id="UserProductivitypage">
+                        <customHeader>
+                            <Toolbar>
+                                <Title
+                                    text="User Productivity"
+                                    level="H1"
+                                />
+                                <ToolbarSpacer />
+
+                                <Button
+                                    icon="sap-icon://search"
+                                    type="Emphasized"
+                                    press="onAddReceiveAPackage"
+                                    tooltip="Search"
+                                />
+                                <Button
+                                    icon="sap-icon://refresh"
+                                    tooltip="Refresh"
+                                    type="Emphasized"
+                                />
+                            </Toolbar>
+                        </customHeader>
+                        <Panel>
+                            <layout:Grid defaultSpan="XL6 S12">
+                                <VBox
+                                    justifyContent="Center"
+                                    height="4rem"
+                                >
+                                    <Label text="From Date" />
+                                    <DatePicker />
+                                </VBox>
+                                <VBox
+                                    justifyContent="Center"
+                                    height="4rem"
+                                >
+                                    <Label text="To Date" />
+                                    <DatePicker />
+                                </VBox>
+                            </layout:Grid>
+                        </Panel>
+                        <table:Table selectionMode="None">
+                            <table:columns>
+                                <table:Column filterProperty="color">
+                                    <Label text="Date" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="color">
+                                    <Label text="User" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+
+                                <table:Column filterProperty="color">
+                                    <Label text="Ext Tracking #" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="color">
+                                    <Label text="Int Tracking #" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="color">
+                                    <Label text="Status" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                            </table:columns>
+                        </table:Table>
+                    </Page>
+
+                    <Page id="Carriersepage">
+                        <customHeader>
+                            <Toolbar>
+                                <Title
+                                    text="Carriers"
+                                    level="H1"
+                                />
+                                <ToolbarSpacer />
+                                <Button
+                                    icon="sap-icon://add"
+                                    type="Emphasized"
+                                    press="onAddCarrier"
+                                />
+                            </Toolbar>
+                        </customHeader>
+                        <HBox
+                            alignItems="Center"
+                            justifyContent="SpaceAround"
+                            wrap="NoWrap"
+                            class="sapUiSmallMargin"
+                        >
+                            <GenericTile
+                                class="tilecreateuser"
+                                press="onTilePress"
+                                header="Total Users"
+                                frameType="TwoByHalf"
+                                width="21rem"
+                            >
+                                <TileContent>
+                                    <NumericContent
+                                        icon="sap-icon://shipping-status"
+                                        value="{/Carriers/$count}"
+                                        scale=""
+                                        indicator="None"
+                                        valueColor="Good"
+                                    />
+                                </TileContent>
+                            </GenericTile>
+                            <GenericTile
+                                class="tilecreateuser2"
+                                press="onTilePress"
+                                header="Active"
+                                frameType="TwoByHalf"
+                                width="21rem"
+                            >
+                                <TileContent>
+                                    <NumericContent
+                                        icon="sap-icon://thumb-up"
+                                        value="{/Carriers/$count?$filter=Status eq 'Active'}"
+                                        scale=""
+                                        indicator="None"
+                                        valueColor="Neutral"
+                                    />
+                                </TileContent>
+                            </GenericTile>
+                            <GenericTile
+                                class="tilecreateuser3"
+                                press="onTilePress"
+                                header="InActive"
+                                frameType="TwoByHalf"
+                                width="21rem"
+                            >
+                                <TileContent>
+                                    <NumericContent
+                                        icon="sap-icon://thumb-down"
+                                        value="10"
+                                        scale=""
+                                        indicator="None"
+                                        valueColor="Neutral"
+                                    />
+                                </TileContent>
+                            </GenericTile>
+                        </HBox>
+
+                        <table:Table  alternateRowColors="true" id="Carriers_table" selectionMode="None" rows="{/Carriers}">
+                            <table:columns >
+                                <table:Column filterProperty="Name">
+                                    <Label text="Name" />
+                                    <table:template>
+                                        <Text
+                                            text="{Name}"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="Description">
+                                    <Label text="Description" />
+                                    <table:template>
+                                        <Text
+                                            text="{Description}"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="Status">
+                                    <Label text="Status" />
+                                    <table:template>
+                                        <Text
+                                            text="{Status}"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="ShipmentTrackingURL">
+                                    <Label text="Track URL" />
+                                    <table:template>
+                                        <Text
+                                            text="{ShipmentTrackingURL}"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column width="6rem">
+                                    <Label text="Action" />
+                                    <table:template>
+                                        <HBox justifyContent="SpaceBetween">
+                                            <core:Icon
+                                                src="sap-icon://edit"
+                                                color="blue"
+                                                press="onEditCarrier"
+                                            />
+                                            <core:Icon
+                                                id="Carriers_delete"
+                                                src="sap-icon://sys-minus"
+                                                color="red"
+                                                press="onDeleteRowData"
+                                            />
+                                        </HBox>
+                                    </table:template>
+                                </table:Column>
+                            </table:columns>
+                        </table:Table>
+                    </Page>
+
+                    <Page id="PackageTypespage">
+                        <customHeader>
+                            <Toolbar>
+                                <Title
+                                    text="Package Types"
+                                    level="H1"
+                                />
+                                <ToolbarSpacer />
+                                <Button
+                                    icon="sap-icon://add"
+                                    type="Emphasized"
+                                    press="onAddPackageType"
+                                />
+                            </Toolbar>
+                        </customHeader>
+                        <HBox
+                            alignItems="Center"
+                            justifyContent="SpaceAround"
+                            wrap="NoWrap"
+                            class="sapUiSmallMargin"
+                        >
+                            <GenericTile
+                                class="tilecreateuser"
+                                press="onTilePress"
+                                header="Package Types"
+                                frameType="TwoByHalf"
+                                width="21rem"
+                            >
+                                <TileContent>
+                                    <NumericContent
+                                        icon="sap-icon://shipping-status"
+                                        value="{/Package_Types/$count}"
+                                        scale=""
+                                        indicator="None"
+                                        valueColor="Good"
+                                    />
+                                </TileContent>
+                            </GenericTile>
+                            <GenericTile
+                                class="tilecreateuser2"
+                                press="onTilePress"
+                                header="Active"
+                                frameType="TwoByHalf"
+                                width="21rem"
+                            >
+                                <TileContent>
+                                    <NumericContent
+                                        icon="sap-icon://thumb-up"
+                                        value="10"
+                                        scale=""
+                                        indicator="None"
+                                        valueColor="Neutral"
+                                    />
+                                </TileContent>
+                            </GenericTile>
+                            <GenericTile
+                                class="tilecreateuser3"
+                                press="onTilePress"
+                                header="InActive"
+                                frameType="TwoByHalf"
+                                width="21rem"
+                            >
+                                <TileContent>
+                                    <NumericContent
+                                        icon="sap-icon://thumb-down"
+                                        value="10"
+                                        scale=""
+                                        indicator="None"
+                                        valueColor="Neutral"
+                                    />
+                                </TileContent>
+                            </GenericTile>
+                        </HBox>
+
+                        <table:Table id="Package_Types_table" selectionMode="None" rows="{/Package_Types}">
+                            <table:columns>
+                                <table:Column filterProperty="color">
+                                    <Label text="Code" />
+                                    <table:template>
+                                        <Text
+                                            text="{Code}"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+
+                                <table:Column filterProperty="color">
+                                    <Label text="Name" />
+                                    <table:template>
+                                        <Text
+                                            text="{Name}"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="color">
+                                    <Label text="Description" />
+                                    <table:template>
+                                        <Text
+                                            text="{Description}"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="color">
+                                    <Label text="Status" />
+                                    <table:template>
+                                        <Text
+                                            text="{Status}"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column width="4rem">
+                                    <Label text="Action" />
+                                    <table:template>
+                                        <HBox justifyContent="SpaceBetween">
+                                            <core:Icon
+                                                src="sap-icon://edit"
+                                                color="blue"
+                                                press="onEditPackageType"
+                                            />
+                                            <core:Icon
+                                                id="Package_Types_delete"
+                                                src="sap-icon://sys-minus"
+                                                color="red"
+                                                press="onDeleteRowData"
+                                            />
+                                        </HBox>
+                                    </table:template>
+                                </table:Column>
+                            </table:columns>
+                        </table:Table>
+                    </Page>
+
+                    <Page id="PackageStatusespage">
+                        <customHeader>
+                            <Toolbar>
+                                <Title
+                                    text="Package Statuses"
+                                    level="H1"
+                                />
+                                <ToolbarSpacer />
+                                <Button
+                                    icon="sap-icon://add"
+                                    type="Emphasized"
+                                    press="onAddPackageStatuses"
+                                />
+                            </Toolbar>
+                        </customHeader>
+                        <HBox
+                            alignItems="Center"
+                            justifyContent="SpaceAround"
+                            wrap="NoWrap"
+                            class="sapUiSmallMargin"
+                        >
+                            <GenericTile
+                                class="tilecreateuser"
+                                press="onTilePress"
+                                header="Package Statuses"
+                                frameType="TwoByHalf"
+                                width="21rem"
+                            >
+                                <TileContent>
+                                    <NumericContent
+                                        icon="sap-icon://sys-enter-2"
+                                        value="{/Package_Statuses/$count}"
+                                        scale=""
+                                        indicator="None"
+                                        valueColor="Good"
+                                    />
+                                </TileContent>
+                            </GenericTile>
+                            <GenericTile
+                                class="tilecreateuser2"
+                                press="onTilePress"
+                                header="Active"
+                                frameType="TwoByHalf"
+                                width="21rem"
+                            >
+                                <TileContent>
+                                    <NumericContent
+                                        icon="sap-icon://thumb-up"
+                                        value="10"
+                                        scale=""
+                                        indicator="None"
+                                        valueColor="Neutral"
+                                    />
+                                </TileContent>
+                            </GenericTile>
+                            <GenericTile
+                                class="tilecreateuser3"
+                                press="onTilePress"
+                                header="InActive"
+                                frameType="TwoByHalf"
+                                width="21rem"
+                            >
+                                <TileContent>
+                                    <NumericContent
+                                        icon="sap-icon://thumb-down"
+                                        value="10"
+                                        scale=""
+                                        indicator="None"
+                                        valueColor="Neutral"
+                                    />
+                                </TileContent>
+                            </GenericTile>
+                        </HBox>
+
+                        <table:Table id="Package_Statuses_table" selectionMode="None" rows="{/Package_Statuses}">
+                            <table:columns>
+                                <table:Column filterProperty="Code">
+                                    <Label text="Code" />
+                                    <table:template>
+                                        <Text
+                                            text="{Code}"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+
+                                <table:Column filterProperty="Description">
+                                    <Label text="Description" />
+                                    <table:template>
+                                        <Text
+                                            text="{Description}"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="Type">
+                                    <Label text="Type" />
+                                    <table:template>
+                                        <Text
+                                            text="{Type}"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="ColorPicker">
+                                    <Label text="Color Picker" />
+                                    <table:template>
+                                        <Text
+                                            text="{ColorPicker}"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="OrderFlow">
+                                    <Label text="Order Flow" />
+                                    <table:template>
+                                        <Text
+                                            text="{OrderFlow}"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="PhotoRequired">
+                                    <Label text="Photo Required" />
+                                    <table:template>
+                                        <Text
+                                            text="{PhotoRequired}"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="SignatureRequired">
+                                    <Label text="Signature Required" />
+                                    <table:template>
+                                        <Text
+                                            text="{SignatureRequired}"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="HideTracking">
+                                    <Label text="Hide Tracking" />
+                                    <table:template>
+                                        <Text
+                                            text="{HideTracking}"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+
+                                <table:Column filterProperty="Status">
+                                    <Label text="Status" />
+                                    <table:template>
+                                        <Text
+                                            text="{Status}"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column width="4rem">
+                                    <Label text="Action" />
+                                    <table:template>
+                                        <HBox justifyContent="SpaceBetween">
+                                            <core:Icon
+                                                src="sap-icon://edit"
+                                                color="blue"
+                                                press="onEditPackageStatuses"
+                                            />
+                                            <core:Icon
+                                            id="Package_Statuses_delete"
+                                                src="sap-icon://sys-minus"
+                                                color="red"
+                                                press="onDeleteRowData"
+                                            />
+                                        </HBox>
+                                    </table:template>
+                                </table:Column>
+                            </table:columns>
+                        </table:Table>
+                    </Page>
+
+                    <Page id="Locationspage">
+                        <customHeader>
+                            <Toolbar>
+                                <Title
+                                    text="Locations"
+                                    level="H1"
+                                />
+                                <ToolbarSpacer />
+                                <Button
+                                    icon="sap-icon://add"
+                                    type="Emphasized"
+                                    press="onAddLocations"
+                                />
+                            </Toolbar>
+                        </customHeader>
+                        <HBox
+                            alignItems="Center"
+                            justifyContent="SpaceAround"
+                            wrap="NoWrap"
+                            class="sapUiSmallMargin"
+                        >
+                            <GenericTile
+                                class="tilecreateuser"
+                                press="onTilePress"
+                                header="Locations"
+                                frameType="TwoByHalf"
+                                width="21rem"
+                            >
+                                <TileContent>
+                                    <NumericContent
+                                        icon="sap-icon://locate-me"
+                                        value="{/Users/$count}"
+                                        scale=""
+                                        indicator="None"
+                                        valueColor="Good"
+                                    />
+                                </TileContent>
+                            </GenericTile>
+                            <GenericTile
+                                class="tilecreateuser2"
+                                press="onTilePress"
+                                header="Active"
+                                frameType="TwoByHalf"
+                                width="21rem"
+                            >
+                                <TileContent>
+                                    <NumericContent
+                                        icon="sap-icon://thumb-up"
+                                        value="10"
+                                        scale=""
+                                        indicator="None"
+                                        valueColor="Neutral"
+                                    />
+                                </TileContent>
+                            </GenericTile>
+                            <GenericTile
+                                class="tilecreateuser3"
+                                press="onTilePress"
+                                header="InActive"
+                                frameType="TwoByHalf"
+                                width="21rem"
+                            >
+                                <TileContent>
+                                    <NumericContent
+                                        icon="sap-icon://thumb-down"
+                                        value="10"
+                                        scale=""
+                                        indicator="None"
+                                        valueColor="Neutral"
+                                    />
+                                </TileContent>
+                            </GenericTile>
+                        </HBox>
+
+                        <table:Table id="Locations_table" selectionMode="None" rows="{/Locations}">
+                            <table:columns>
+                                <table:Column filterProperty="Code">
+                                    <Label text="Code" />
+                                    <table:template>
+                                        <Text
+                                            text="{Code}"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+
+                                <table:Column filterProperty="Name">
+                                    <Label text="Name" />
+                                    <table:template>
+                                        <Text
+                                            text="{Name}"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="Address">
+                                    <Label text="Address" />
+                                    <table:template>
+                                        <Text
+                                            text="{Address}"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="City">
+                                    <Label text="City" />
+                                    <table:template>
+                                        <Text
+                                            text="{City}"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="State">
+                                    <Label text="State" />
+                                    <table:template>
+                                        <Text
+                                            text="{State}"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column >
+                                    <Label text="Zipcode" />
+                                    <table:template>
+                                        <Text
+                                            text="{Zipcode}"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="Country">
+                                    <Label text="Country" />
+                                    <table:template>
+                                        <Text
+                                            text="{Country}"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="Phone">
+                                    <Label text="Phone" />
+                                    <table:template>
+                                        <Text
+                                            text="{Phone}"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column >
+                                    <Label text="Remarks" />
+                                    <table:template>
+                                        <Text
+                                            text="{Remarks}"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+
+                                <table:Column filterProperty="Status">
+                                    <Label text="Status" />
+                                    <table:template>
+                                        <Text
+                                            text="{Status}"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column width="4rem">
+                                    <Label text="Action" />
+                                    <table:template>
+                                        <HBox justifyContent="SpaceBetween">
+                                            <core:Icon
+                                                src="sap-icon://edit"
+                                                color="blue"
+                                                press="onEditLocations"
+                                            />
+                                            <core:Icon
+                                            id="Locations_delete"
+                                                src="sap-icon://sys-minus"
+                                                color="red"
+                                                press="onDeleteRowData"
+                                            />
+                                        </HBox>
+                                    </table:template>
+                                </table:Column>
+                            </table:columns>
+                        </table:Table>
+                    </Page>
+
+                    <Page id="UserManagementpage">
+                        <customHeader>
+                            <Toolbar>
+                                <Title
+                                    text="User Management"
+                                    level="H1"
+                                />
+                                <ToolbarSpacer />
+
+                                <!-- <Button icon="sap-icon://refresh" />
+                                <Button
+                                    icon="sap-icon://filter"
+                                    text="Filter"
+                                    press="onFilterselection"
+                                /> -->
+                                <Button
+                                    icon="sap-icon://add"
+                                    press="onCreateUser"
+                                />
+                                <Button
+                                    icon="sap-icon://excel-attachment"
+                                    press="onAddExcel"
+                                />
+                                <unified:FileUploader
+                                    id="excelUploader"
+                                    uploadOnChange="true"
+                                    visible="false"
+                                    fileType="xlsx,xls"
+                                    change="onExcelUploadChange"
+                                    maximumFileSize="5"
+                                    mimeType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
+                                />
+                            </Toolbar>
+                        </customHeader>
+                        <HBox
+                            alignItems="Center"
+                            justifyContent="SpaceBetween"
+                            wrap="NoWrap"
+                            class="sapUiSmallMargin"
+                        >
+                            <GenericTile
+                                class="tilecreateuser"
+                                press="onTilePress"
+                                header="Total Users"
+                                frameType="TwoByHalf"
+                                width="9rem"
+                            >
+                                <TileContent>
+                                    <NumericContent
+                                        icon="sap-icon://family-care"
+                                        value="{/Users/$count}"
+                                        scale=""
+                                        indicator="None"
+                                        valueColor="Good"
+                                    />
+                                </TileContent>
+                            </GenericTile>
+                            <GenericTile
+                                class="tilecreateuser2"
+                                press="onTilePress"
+                                header="Admin"
+                                frameType="TwoByHalf"
+                                width="9rem"
+                            >
+                                <TileContent>
+                                    <NumericContent
+                                        icon="sap-icon://family-care"
+                                        value="10"
+                                        scale=""
+                                        indicator="None"
+                                        valueColor="Neutral"
+                                    />
+                                </TileContent>
+                            </GenericTile>
+                            <GenericTile
+                                class="tilecreateuser3"
+                                press="onTilePress"
+                                header="Standard Users"
+                                frameType="TwoByHalf"
+                                width="9rem"
+                            >
+                                <TileContent>
+                                    <NumericContent
+                                        icon="sap-icon://family-care"
+                                        value="10"
+                                        scale=""
+                                        indicator="None"
+                                        valueColor="Neutral"
+                                    />
+                                </TileContent>
+                            </GenericTile>
+                            <GenericTile
+                                class="tilecreateuser4"
+                                press="onTilePress"
+                                header="Operations Users"
+                                frameType="TwoByHalf"
+                                width="150px"
+                            >
+                                <TileContent>
+                                    <NumericContent
+                                        icon="sap-icon://family-care"
+                                        value="10"
+                                        scale=""
+                                        indicator="None"
+                                        valueColor="Neutral"
+                                    />
+                                </TileContent>
+                            </GenericTile>
+                            <GenericTile
+                                class="tilecreateuser5"
+                                press="onTilePress"
+                                header="Location Admin"
+                                frameType="TwoByHalf"
+                                width="9rem"
+                            >
+                                <TileContent>
+                                    <NumericContent
+                                        icon="sap-icon://family-care"
+                                        value="10"
+                                        scale=""
+                                        indicator="None"
+                                        valueColor="Neutral"
+                                    />
+                                </TileContent>
+                            </GenericTile>
+                            <GenericTile
+                                class="tilecreateuser6"
+                                press="onTilePress"
+                                header="Test Role"
+                                frameType="TwoByHalf"
+                                width="9rem"
+                            >
+                                <TileContent>
+                                    <NumericContent
+                                        icon="sap-icon://family-care"
+                                        value="10"
+                                        scale=""
+                                        indicator="None"
+                                        valueColor="Neutral"
+                                    />
+                                </TileContent>
+                            </GenericTile>
+                            <GenericTile
+                                class="tilecreateuser7"
+                                press="onTilePress"
+                                header="Test 2 Std Update"
+                                frameType="TwoByHalf"
+                                width="150px"
+                            >
+                                <TileContent>
+                                    <NumericContent
+                                        icon="sap-icon://family-care"
+                                        value="10"
+                                        scale=""
+                                        indicator="None"
+                                        valueColor="Neutral"
+                                    />
+                                </TileContent>
+                            </GenericTile>
+                        </HBox>
+                        <content>
+                            <table:Table
+                                id="userstable"
+                                class="formtable"
+                                width="100%"
+                                columnHeaderVisible="true"
+                                rows="{/Users}"
+                                selectionMode="None"
+                                alternateRowColors="true"
+                                enableCellFilter="true"
+                            >
+                                <table:extension>
+                                    <OverflowToolbar style="Clear">
+                                        <Title text="Products" />
+
+                                        <ToolbarSpacer />
+                                        <!-- <Button
+                                            icon="sap-icon://decline"
+                                            tooltip="Clear all filters"
+                                            press="clearAllFilters"
+                                        /> -->
+                                        <Button
+                                            icon="sap-icon://action-settings"
+                                            press="onOpenColumnftlter"
+                                        />
+                                    </OverflowToolbar>
+                                </table:extension>
+                                <table:columns>
+                                    <table:Column
+                                        filterProperty="FirstName"
+                                        defaultFilterOperator="StartsWith"
+                                        width="7rem"
+                                    >
+                                        <Label text="First Name" />
+                                        <table:template>
+                                            <Text text="{firstName}" />
+                                        </table:template>
+                                    </table:Column>
+                                    <table:Column
+                                        filterProperty="lastName"
+                                        width="8rem"
+                                    >
+                                        <Label text="Last Name" />
+                                        <table:template>
+                                            <Text text="{lastName}" />
+                                        </table:template>
+                                    </table:Column>
+                                    <table:Column
+                                        filterProperty="role"
+                                        width="8rem"
+                                    >
+                                        <Label text="Role" />
+                                        <table:template>
+                                            <Text text="{role}" />
+                                        </table:template>
+                                    </table:Column>
+
+                                    <table:Column
+                                        filterProperty="department"
+                                        width="8rem"
+                                    >
+                                        <Label text="Department" />
+                                        <table:template>
+                                            <Text text="{department}" />
+                                        </table:template>
+                                    </table:Column>
+                                    <table:Column
+                                        filterProperty="userType"
+                                        width="8rem"
+                                    >
+                                        <Label text="UserType" />
+                                        <table:template>
+                                            <Text text="{userType}" />
+                                        </table:template>
+                                    </table:Column>
+                                    <table:Column
+                                        filterProperty="location"
+                                        width="9rem"
+                                    >
+                                        <Label text="Location" />
+                                        <table:template>
+                                            <Text text="{location}" />
+                                        </table:template>
+                                    </table:Column>
+                                    <table:Column width="9rem">
+                                        <Label text="Address1" />
+                                        <table:template>
+                                            <Text text="{address1}" />
+                                        </table:template>
+                                    </table:Column>
+                                    <table:Column width="8rem">
+                                        <Label text="Phone" />
+                                        <table:template>
+                                            <Text text="{phone}" />
+                                        </table:template>
+                                    </table:Column>
+                                    <table:Column width="7rem">
+                                        <Label text="Email" />
+                                        <table:template>
+                                            <Text text="{emailID}" />
+                                        </table:template>
+                                    </table:Column>
+                                    <table:Column
+                                        filterProperty="city"
+                                        width="7rem"
+                                    >
+                                        <Label text="City" />
+                                        <table:template>
+                                            <Text text="{city}" />
+                                        </table:template>
+                                    </table:Column>
+                                    <table:Column
+                                        filterProperty="state"
+                                        width="7rem"
+                                    >
+                                        <Label text="State" />
+                                        <table:template>
+                                            <Text text="{state}" />
+                                        </table:template>
+                                    </table:Column>
+                                    <table:Column
+                                        filterProperty="country"
+                                        width="8rem"
+                                    >
+                                        <Label text="Country" />
+                                        <table:template>
+                                            <Text text="{country}" />
+                                        </table:template>
+                                    </table:Column>
+                                    <table:Column width="8rem">
+                                        <Label text="Zipcode" />
+                                        <table:template>
+                                            <Text text="{zipcode}" />
+                                        </table:template>
+                                    </table:Column>
+                                    <table:Column
+                                        filterProperty="language"
+                                        width="8rem"
+                                    >
+                                        <Label text="Language" />
+                                        <table:template>
+                                            <Text text="{language}" />
+                                        </table:template>
+                                    </table:Column>
+                                    <table:Column width="8rem">
+                                        <Label text="Status" />
+                                        <table:template>
+                                            <Text text="{status}" />
+                                        </table:template>
+                                    </table:Column>
+                                    <table:Column width="4rem">
+                                        <Label text="Action" />
+                                        <table:template>
+                                            <HBox justifyContent="SpaceBetween">
+                                                <core:Icon
+                                                    src="sap-icon://edit"
+                                                    press="onEdituserRow"
+                                                />
+                                                <core:Icon
+                                                    src="sap-icon://sys-minus"
+                                                    color="red"
+                                                    press="onDeleteuserRow"
+                                                />
+                                            </HBox>
+                                        </table:template>
+                                    </table:Column>
+                                </table:columns>
+                            </table:Table>
+                        </content>
+                    </Page>
+
+                    <Page id="Calendarpage">
+                        <customHeader>
+                            <Toolbar>
+                                <Title
+                                    text="Calendar"
+                                    level="H1"
+                                />
+                                <ToolbarSpacer />
+
+                                <Button
+                                    icon="sap-icon://refresh"
+                                    type="Emphasized"
+                                    tooltip="Refresh"
+                                />
+                                <Button
+                                    icon="sap-icon://save"
+                                    tooltip="save"
+                                    type="Success"
+                                />
+                                <Button
+                                    icon="sap-icon://delete"
+                                    type="Negative"
+                                />
+                            </Toolbar>
+                        </customHeader>
+                        <layout:Grid>
+                            <VBox
+                                justifyContent="Center"
+                                height="4rem"
+                            >
+                                <Label text="Start Date Time" />
+                                <DatePicker value="{requestpackageModel>/Calendars/StartDateTime}" displayFormat="yyyy-MM-dd" valueFormat="yyyy-MM-dd" />
+                            </VBox>
+                            <VBox
+                                justifyContent="Center"
+                                height="4rem"
+                            >
+                                <Label text="End Date Time" />
+                                <DatePicker value="{requestpackageModel>/Calendars/EndDateTime}" displayFormat="yyyy-MM-dd" valueFormat="yyyy-MM-dd"/>
+                            </VBox>
+                            <VBox
+                                justifyContent="Center"
+                                height="4rem"
+                            >
+                                <Label
+                                    text="Reason"
+                                    required="true"
+                                />
+                                <Input value="{requestpackageModel>/Calendars/Reason}" />
+                            </VBox>
+                        </layout:Grid>
+                        
+                        <table:Table id="Calendars_table" selectionMode="Single" rowSelectionChange="onSelectCalenderRow" rows="{/Calendars}">
+                            <table:columns>
+                                <table:Column filterProperty="StartDateTime">
+                                    <Label text="Start Date Time" />
+                                    <table:template>
+                                        <Text
+                                            text="{StartDateTime}"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="EndDateTime">
+                                    <Label text="End Date Time" />
+                                    <table:template>
+                                        <Text
+                                            text="{EndDateTime}"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column >
+                                    <Label text="Reason " />
+                                    <table:template>
+                                        <Text
+                                            text="{Reason}"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                            </table:columns>
+                        </table:Table>
+                    </Page>
+
+                    <Page id="DeliveryLocationspage">
+                        <customHeader>
+                            <Toolbar>
+                                <Title
+                                    text="Delivery Locations"
+                                    level="H1"
+                                />
+                                <ToolbarSpacer />
+                                <Button
+                                    icon="sap-icon://add"
+                                    type="Emphasized"
+                                    press="onAddDeliveryLocations"
+                                />
+                            </Toolbar>
+                        </customHeader>
+                        <HBox
+                            alignItems="Center"
+                            justifyContent="SpaceAround"
+                            wrap="NoWrap"
+                            class="sapUiSmallMargin"
+                        >
+                            <GenericTile
+                                class="tilecreateuser"
+                                press="onTilePress"
+                                header="Delivery Locations"
+                                frameType="TwoByHalf"
+                                width="21rem"
+                            >
+                                <TileContent>
+                                    <NumericContent
+                                        icon="sap-icon://locate-me"
+                                        value="{/Delivery_Locations/$count}"
+                                        scale=""
+                                        indicator="None"
+                                        valueColor="Good"
+                                    />
+                                </TileContent>
+                            </GenericTile>
+                            <GenericTile
+                                class="tilecreateuser2"
+                                press="onTilePress"
+                                header="Active"
+                                frameType="TwoByHalf"
+                                width="21rem"
+                            >
+                                <TileContent>
+                                    <NumericContent
+                                        icon="sap-icon://thumb-up"
+                                        value="10"
+                                        scale=""
+                                        indicator="None"
+                                        valueColor="Neutral"
+                                    />
+                                </TileContent>
+                            </GenericTile>
+                            <GenericTile
+                                class="tilecreateuser3"
+                                press="onTilePress"
+                                header="InActive"
+                                frameType="TwoByHalf"
+                                width="21rem"
+                            >
+                                <TileContent>
+                                    <NumericContent
+                                        icon="sap-icon://thumb-down"
+                                        value="10"
+                                        scale=""
+                                        indicator="None"
+                                        valueColor="Neutral"
+                                    />
+                                </TileContent>
+                            </GenericTile>
+                        </HBox>
+
+                        <table:Table id="Delivery_Locations_table" selectionMode="None" rows="{/Delivery_Locations}">
+                            <table:columns>
+                                <table:Column filterProperty="LocationCode">
+                                    <Label text="Code" />
+                                    <table:template>
+                                        <Text
+                                            text="{LocationCode}"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+
+                                <table:Column filterProperty="LocationName">
+                                    <Label text="Name" />
+                                    <table:template>
+                                        <Text
+                                            text="{LocationName}"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column >
+                                    <Label text="Remarks" />
+                                    <table:template>
+                                        <Text
+                                            text="{LocationRemarks}"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="Status">
+                                    <Label text="Status" />
+                                    <table:template>
+                                        <Text
+                                            text="{LocationStatus}"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column width="4rem">
+                                    <Label text="Action" />
+                                    <table:template>
+                                        <HBox justifyContent="SpaceBetween">
+                                            <core:Icon
+                                                src="sap-icon://edit"
+                                                color="blue"
+                                                press="onEditDeliveryLocations"
+                                            />
+                                            <core:Icon
+                                                id="Delivery_Locations_delete"
+                                                src="sap-icon://sys-minus"
+                                                color="red"
+                                                press="onDeleteRowData"
+                                            />
+                                        </HBox>
+                                    </table:template>
+                                </table:Column>
+                            </table:columns>
+                        </table:Table>
+                    </Page>
+
+                    <Page id="Rolespage">
+                        <customHeader>
+                            <Toolbar>
+                                <Title
+                                    text="Roles"
+                                    level="H1"
+                                />
+                                <ToolbarSpacer />
+                                <Button
+                                    icon="sap-icon://add"
+                                    type="Emphasized"
+                                    press="onAddRoles"
+                                />
+                            </Toolbar>
+                        </customHeader>
+                        <HBox
+                            alignItems="Center"
+                            justifyContent="SpaceAround"
+                            wrap="NoWrap"
+                            class="sapUiSmallMargin"
+                        >
+                            <GenericTile
+                                class="tilecreateuser"
+                                press="onTilePress"
+                                header="Total Roles"
+                                frameType="TwoByHalf"
+                                width="21rem"
+                            >
+                                <TileContent>
+                                    <NumericContent
+                                        icon="sap-icon://family-care"
+                                        value="{/Users/$count}"
+                                        scale=""
+                                        indicator="None"
+                                        valueColor="Good"
+                                    />
+                                </TileContent>
+                            </GenericTile>
+                            <GenericTile
+                                class="tilecreateuser2"
+                                press="onTilePress"
+                                header="Active"
+                                frameType="TwoByHalf"
+                                width="21rem"
+                            >
+                                <TileContent>
+                                    <NumericContent
+                                        icon="sap-icon://thumb-up"
+                                        value="10"
+                                        scale=""
+                                        indicator="None"
+                                        valueColor="Neutral"
+                                    />
+                                </TileContent>
+                            </GenericTile>
+                            <GenericTile
+                                class="tilecreateuser3"
+                                press="onTilePress"
+                                header="InActive"
+                                frameType="TwoByHalf"
+                                width="21rem"
+                            >
+                                <TileContent>
+                                    <NumericContent
+                                        icon="sap-icon://thumb-down"
+                                        value="10"
+                                        scale=""
+                                        indicator="None"
+                                        valueColor="Neutral"
+                                    />
+                                </TileContent>
+                            </GenericTile>
+                        </HBox>
+
+                        <table:Table id="Roles_table" selectionMode="None">
+                            <table:columns>
+                                <table:Column filterProperty="color">
+                                    <Label text="Code" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+
+                                <table:Column filterProperty="color">
+                                    <Label text="Name" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="color">
+                                    <Label text="All Packages" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="color">
+                                    <Label text="Log a Package" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column width="4rem">
+                                    <Label text="Action" />
+                                    <table:template>
+                                        <HBox justifyContent="SpaceBetween">
+                                            <core:Icon
+                                                src="sap-icon://edit"
+                                                color="blue"
+                                                press="onEditRoles"
+                                            />
+                                            <core:Icon
+                                                id="Roles_delete"
+                                                src="sap-icon://sys-minus"
+                                                color="red"
+                                                press="onDeleteRowData"
+                                            />
+                                        </HBox>
+                                    </table:template>
+                                </table:Column>
+                            </table:columns>
+                        </table:Table>
+                    </Page>
+
+                    <Page id="UserLogpage">
+                        <customHeader>
+                            <Toolbar>
+                                <Title
+                                    text="User Log"
+                                    level="H1"
+                                />
+                                <ToolbarSpacer />
+
+                                <Button
+                                    icon="sap-icon://search"
+                                    type="Emphasized"
+                                    press="onAddReceiveAPackage"
+                                    tooltip="Search"
+                                />
+                                <Button
+                                    icon="sap-icon://refresh"
+                                    tooltip="Refresh"
+                                />
+                                <Button
+                                    icon="sap-icon://excel-attachment"
+                                    tooltip="Download Excel"
+                                />
+                                <!-- <Button
+                                    icon="sap-icon://action-settings"
+                                    type="Accept"
+                                /> -->
+                            </Toolbar>
+                        </customHeader>
+                        <layout:Grid>
+                            <VBox
+                                justifyContent="Center"
+                                height="4rem"
+                            >
+                                <Label text="From Date" />
+                                <DatePicker />
+                            </VBox>
+                            <VBox
+                                justifyContent="Center"
+                                height="4rem"
+                            >
+                                <Label text="To Date" />
+                                <DatePicker />
+                            </VBox>
+                            <VBox
+                                justifyContent="Center"
+                                height="4rem"
+                            >
+                                <Label text="User Name" />
+                                <SearchField />
+                            </VBox>
+                        </layout:Grid>
+                        <table:Table selectionMode="None">
+                            <!-- <table:extension><OverflowToolbar >
+                        <ToolbarSpacer ></ToolbarSpacer>
+                        <Button
+                                                    icon="sap-icon://action-settings"
+                                                    press="onOpenColumnftlter"
+                                                />
+                        </OverflowToolbar></table:extension> -->
+                            <table:columns>
+                                <table:Column filterProperty="color">
+                                    <Label text="User Name" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="color">
+                                    <Label text="Module Name" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="color">
+                                    <Label text="Operation Type" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="color">
+                                    <Label text="IP Address" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="color">
+                                    <Label text="Date" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="color">
+                                    <Label text="Time" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                            </table:columns>
+                        </table:Table>
+                    </Page>
+                    <Page id="EmailTemplatepage">
+                        <customHeader>
+                            <Toolbar>
+                                <Title
+                                    text="User Log"
+                                    level="H1"
+                                />
+                                <ToolbarSpacer />
+                                <Button
+                                    icon="sap-icon://add"
+                                    type="Emphasized"
+                                    press="onAddEmail"
+                                />
+                            </Toolbar>
+                        </customHeader>
+                        <table:Table selectionMode="None">
+                            <table:columns>
+                                <table:Column filterProperty="color">
+                                    <Label text="Status Name" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="color">
+                                    <Label text="Template Name" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column filterProperty="color">
+                                    <Label text="Template Description" />
+                                    <table:template>
+                                        <Text
+                                            text="color"
+                                            wrapping="false"
+                                        />
+                                    </table:template>
+                                </table:Column>
+                                <table:Column width="4rem">
+                                    <Label text="Action" />
+                                    <table:template>
+                                        <HBox justifyContent="SpaceBetween">
+                                            <core:Icon
+                                                src="sap-icon://edit"
+                                                color="blue"
+                                                press="onAddRow"
+                                            />
+                                            <core:Icon
+                                                src="sap-icon://sys-minus"
+                                                color="red"
+                                                press="onDeleteRow"
+                                            />
+                                        </HBox>
+                                    </table:template>
+                                </table:Column>
+                            </table:columns>
+                        </table:Table>
+                    </Page>
+                </pages>
+            </NavContainer>
+        </tnt:mainContents>
+    </tnt:ToolPage>
+</mvc:View>

@@ -1,0 +1,332 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:form="sap.ui.layout.form"
+>
+    <Dialog
+        id="CreateUserDialog"
+        title="Create a User"
+        contentWidth="80%"
+        contentHeight="auto"
+        class="CreateUserDialog"
+    >
+        <customHeader>
+            <Bar>
+                <contentLeft>
+                    <Title text="Create A User" />
+                </contentLeft>
+                <contentRight>
+                    <Button
+                        icon="sap-icon://decline"
+                        type="Transparent"
+                        press=".onCreateUserFormClosePress"
+                    />
+                </contentRight>
+            </Bar>
+        </customHeader>
+
+        <content>
+            <l:Grid
+                defaultSpan="M6 S12"
+                vSpacing="0"
+            >
+                <VBox>
+                    <Label
+                        text="User ID"
+                        required="true"
+                        class="sapUiSmallMarginTop"
+                    />
+                    <Input
+                        value="{requestpackageModel>/CreateUserForm/empID}"
+                    />
+                </VBox>
+                <VBox>
+                    <Label
+                        text="First Name "
+                        class="sapUiSmallMarginTop"
+                        required="true"
+                    />
+                    <Input
+                        value="{requestpackageModel>/CreateUserForm/firstName}"
+                    />
+                </VBox>
+                <VBox>
+                    <Label
+                        text="Last Name "
+                        required="true"
+                        class="sapUiSmallMarginTop"
+                    />
+                    <Input
+                        value="{requestpackageModel>/CreateUserForm/lastName}"
+                    />
+                </VBox>
+                <VBox>
+                    <Label
+                        text="UserType"
+                        required="true"
+                        class="sapUiSmallMarginTop"
+                    />
+                    <Input
+                        value="{requestpackageModel>/CreateUserForm/userType}"
+                    />
+                </VBox>
+                <VBox>
+                    <Label
+                        text="Department"
+                        required="true"
+                        class="sapUiSmallMarginTop"
+                    />
+                    <Input
+                        value="{requestpackageModel>/CreateUserForm/department}"
+                    />
+                </VBox>
+                <VBox>
+                    <Label
+                        text="Role"
+                        required="true"
+                        class="sapUiSmallMarginTop"
+                    />
+                    <Input value="{requestpackageModel>/CreateUserForm/role}" />
+                </VBox>
+                <VBox>
+                    <Label
+                        text="Access Type"
+                        required="true"
+                        class="sapUiSmallMarginTop"
+                    />
+                    <Input
+                        value="{requestpackageModel>/CreateUserForm/accessType}"
+                    />
+                </VBox>
+                <VBox>
+                    <Label
+                        text="Location"
+                        required="true"
+                        class="sapUiSmallMarginTop"
+                    />
+                    <Input
+                        value="{requestpackageModel>/CreateUserForm/location}"
+                    />
+                </VBox>
+
+                <VBox>
+                    <Label
+                        text="EMail ID"
+                        required="true"
+                        class="sapUiSmallMarginTop"
+                    />
+                    <Input
+                        value="{requestpackageModel>/CreateUserForm/emailID}"
+                        type="Email"
+                    />
+                </VBox>
+                <VBox>
+                    <Label
+                        text="Phone"
+                        required="true"
+                        class="sapUiSmallMarginTop"
+                    />
+                    <Input
+                        value="{requestpackageModel>/CreateUserForm/phone}"
+                    />
+                </VBox>
+                <Table class="Aliastableclass" items="{requestpackageModel>/aliasList}">
+                <columns>
+                    <Column><Text text="Alias Name" textAlign="Center" /></Column>
+                    <Column><Text text="Action" textAlign="Center" /></Column>
+                </columns>
+                <items>
+                    <ColumnListItem>
+                        <cells>
+                            <Input value="{requestpackageModel>aliasName}"></Input>
+                            <HBox alignItems="Center" justifyContent="SpaceAround">
+                    <Button icon="sap-icon://add" tooltip="Add Row" press="onAddAliasRow"/>
+                    <Button icon="sap-icon://delete" tooltip="Delete Row" press="onDeleteAliasRow"/>
+                </HBox>
+                                                    </cells>
+                    </ColumnListItem>
+                </items>
+                </Table>
+                </l:Grid>
+                <l:Grid defaultSpan="M6 S12"
+                vSpacing="0">
+                <VBox>
+                    <Label
+                        text="Address"
+                        class="sapUiSmallMarginTop"
+                    />
+                    <TextArea
+                        growing="true"
+                        growingMaxLines="3"
+                        width="16rem"
+                        value="{requestpackageModel>/CreateUserForm/address1}"
+                    />
+                </VBox>
+                <VBox>
+                    <Label
+                        text="City"
+                        class="sapUiSmallMarginTop"
+                    />
+                    <Input value="{requestpackageModel>/CreateUserForm/city}" />
+                </VBox>
+                <VBox>
+                    <Label
+                        text="State"
+                        class="sapUiSmallMarginTop"
+                    />
+                    <Input
+                        value="{requestpackageModel>/CreateUserForm/state}"
+                    />
+                </VBox>
+                <VBox>
+                    <Label
+                        text="Zipcode"
+                        class="sapUiSmallMarginTop"
+                    />
+                    <Input
+                        value="{requestpackageModel>/CreateUserForm/zipcode}"
+                    />
+                </VBox>
+                <VBox>
+                    <Label
+                        text="Country "
+                        required="true"
+                        class="sapUiSmallMarginTop"
+                    />
+                    <ComboBox
+                        selectedKey="{requestpackageModel>/CreateUserForm/country}"
+                        width="16rem"
+                    >
+                        <items>
+                            <core:Item
+                                key="India"
+                                text="India"
+                            />
+                            <core:Item
+                                key="USA"
+                                text="USA"
+                            />
+                        </items>
+                    </ComboBox>
+                </VBox>
+                <HBox
+                    alignItems="Center"
+                    justifyContent="SpaceBetween"
+                    width="28rem"
+                >
+                    <VBox width="10rem">
+                        <Label
+                            text="Status"
+                            class="sapUiSmallMarginTop"
+                        />
+                        <ComboBox
+                        selectedKey="{requestpackageModel>/CreateUserForm/status}"
+                    >
+                        <items>
+                            <core:Item
+                                key="ACTIVE"
+                                text="ACTIVE"
+                            />
+                            <core:Item
+                                key="INACTIVE"
+                                text="INACTIVE"
+                            />
+                        </items>
+                    </ComboBox>
+                    </VBox>
+
+                    <VBox width="10rem">
+                        <Label
+                            text="Language"
+                            class="sapUiSmallMarginTop"
+                        />
+                        <ComboBox
+                            selectedKey="{requestpackageModel>/CreateUserForm/language}"
+                        >
+                            <items>
+                                <core:Item
+                                    key="English"
+                                    text="English"
+                                />
+                                <core:Item
+                                    key="Telugu"
+                                    text="Telugu"
+                                />
+                            </items>
+                        </ComboBox>
+                        <!-- <Select width="10rem" selectedKey="{requestpackageModel>/CreateUserForm/language}">
+                        <core:Item
+                            key="English"
+                            text="English"
+                        />
+                        <core:Item
+                            key="Telugu"
+                            text="Telugu"
+                        />
+                    </Select> -->
+                    </VBox>
+                    <CheckBox text="Priority" />
+                </HBox>
+                
+            </l:Grid>
+            <VBox class="createusercheckbox">
+                <HBox
+                    justifyContent="SpaceAround"
+                    class="sapUiSmallMarginBottom"
+                >
+                    <CheckBox
+                        text="Notify Me"
+                        selected="{requestpackageModel>/CreateUser/notifyme}"
+                    />
+                    <CheckBox
+                        text="Received"
+                        selected="{requestpackageModel>/CreateUser/Received}"
+                    />
+                    <CheckBox
+                        text="Exception"
+                        selected="{requestpackageModel>/CreateUser/Exception}"
+                    />
+                    <CheckBox
+                        text="Delivered"
+                        selected="{requestpackageModel>/CreateUser/Delivered}"
+                    />
+                    <CheckBox
+                        text="All Statuses"
+                        selected="{requestpackageModel>/CreateUser/AllStatuses}"
+                    />
+                </HBox>
+                <HBox justifyContent="SpaceAround">
+                    <CheckBox
+                        text="Notify Others"
+                        selected="{requestpackageModel>/CreateUser/notifyothers}"
+                    />
+                    <Input
+                        value="{model>/notifyOthersEmail}"
+                        editable="{requestpackageModel>/CreateUser/notifyothers}"
+                        width="25rem"
+                    />
+                    <CheckBox
+                        text="SMS"
+                        selected="{requestpackageModel>/CreateUser/SMS}"
+                    />
+                </HBox>
+            </VBox>
+        </content>
+        <beginButton>
+            <Button
+                text="Cancel"
+                press=".onCreateUserFormClosePress"
+            />
+        </beginButton>
+
+        <endButton>
+            <Button
+                text="Save"
+                type="Emphasized"
+                icon="sap-icon://save"
+                press=".onSaveNewUser"
+            />
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

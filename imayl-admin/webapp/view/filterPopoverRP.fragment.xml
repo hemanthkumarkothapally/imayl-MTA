@@ -1,0 +1,82 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <Popover
+        id="filterPopover"
+        title="Selection Criteria"
+        placement="Bottom"
+        initialFocus="apply"
+        class="sapUiContentPadding" 
+        contentWidth="260px"
+        contentHeight="230px"
+        
+    >
+        <!-- Footer -->
+        <footer >
+            <OverflowToolbar>
+                <Button
+                    text="Cancel"
+                    press=".handleCancelPress"
+                />
+                <ToolbarSpacer />
+                <Button
+                    id="apply"
+                    text="Apply"
+                    press=".handleApplyPress"
+                    type="Emphasized"
+                />
+            </OverflowToolbar>
+        </footer>
+
+            <!-- Date Range Section -->
+            <HBox
+                class="sapUiSmallMarginBottom" 
+            >
+                <VBox alignItems="Start">
+                    <Text text="From Date" />
+                    <DatePicker
+                        id="popoverfromdate"
+                        value="{path: 'requestpackageModel>/popoverfromdate', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'MM/dd/yyyy' }}"
+                        valueFormat="MM/dd/YYYY"
+                        displayFormat="MM/dd/YYYY"
+                        width="115px"
+                    />
+                </VBox>
+                <VBox alignItems="Start">
+                    <Text text="To Date" />
+                    <DatePicker
+                        id="popovertoDate"
+                        value="{path: 'requestpackageModel>/popovertoDate', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'MM/dd/yyyy' }}"
+                        valueFormat="MM/dd/YYYY"
+                        displayFormat="MM/dd/YYYY"
+                        width="115px"
+                    />
+                </VBox>
+            </HBox>
+
+            <!-- Date Exception Section -->
+            <VBox
+                class="sapUiSmallMarginBottom" 
+            >
+                <Text text="Date Exception" />
+                <ComboBox
+                    selectedKey="All"
+                    width="220px" 
+                >
+                    <core:Item key="All" text="All" />
+                    <core:Item key="RecipientEmailMissing" text="Recipient Email Missing" />
+                    <core:Item key="RecipientNameMissing" text="Recipient Name Missing" />
+                </ComboBox>
+            </VBox>
+
+            <!-- Ship To Name Section -->
+            <VBox>
+                <Text text="Ship To Name" />
+                <Input
+                    type="Text"
+                    width="220px" 
+                />
+            </VBox>
+    </Popover>
+</core:FragmentDefinition>

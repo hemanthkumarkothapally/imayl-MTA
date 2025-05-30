@@ -1,0 +1,180 @@
+<core:FragmentDefinition xmlns:richtexteditor="sap.ui.richtexteditor"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:form="sap.ui.layout.form"
+>
+    <Dialog
+        id="CreateEmailDialog"
+        title="New Email Template"
+        contentWidth="70%"
+        contentHeight="auto"
+        class="CreateUserDialog"
+    >
+        <customHeader>
+            <Bar>
+                <contentLeft>
+                    <Title text="New Email Template" />
+                </contentLeft>
+                <contentRight>
+                    <Button
+                        icon="sap-icon://decline"
+                        type="Transparent"
+                        press=".onCreateEmailClosePress"
+                    />
+                </contentRight>
+            </Bar>
+        </customHeader>
+
+        <content>
+        
+            <form:SimpleForm >
+            <form:content>
+             <Label text="Code*" required="true"/>
+                        <Input value="{Code}" />
+
+                        <!-- Name -->
+                        <Label text="Name*" required="true"/>
+                        <Input value="{Name}" />
+
+                        <!-- Template Description -->
+                        <Label text="Template Description"/>
+                        <Input value="{TemplateDescription}" />
+
+                        <!-- Status Name -->
+                        <Label text="Status Name*" required="true"/>
+                        <Select selectedKey="{StatusName}">
+                            <core:Item key="1" text="Please Choose:"/>
+                            <core:Item key="Received" text="Received" />
+                            <core:Item key="Forward" text="Forward" />
+                            <core:Item key="Tender" text="Tender" />
+                            <core:Item key="Delivered" text="Delivered" />
+                            <core:Item key="Hold" text="Hold" />
+                            <core:Item key="Research" text="Research" />
+                        
+                        </Select>
+
+                        <!-- Place Holders -->
+                        <Label text="Place Holders"/>
+                        <Select selectedKey="{PlaceHolders}">
+                            <core:Item key="1" text="Please Choose:"/>
+                            <core:Item key="ShipTo" text="Ship To" />
+                            <core:Item key="ShipFrom" text="Ship From" />
+                            <core:Item key="ItemDetails" text="Item Details" />
+                            <core:Item key="StatusMaster" text="Status Master" />                        
+                        </Select>
+
+                        <!-- Is Active -->
+                        <Label text="Is Active"/>
+                        <CheckBox selected="{IsActive}"/>
+                        <Label text="Subject" required="true"></Label>
+                        <Input value="" ></Input>
+                        <Label text="Email Body" required="true"></Label>
+                        <richtexteditor:RichTextEditor ></richtexteditor:RichTextEditor>
+                        <Label text="SMS Text" required="true"></Label>
+                        <richtexteditor:RichTextEditor ></richtexteditor:RichTextEditor>
+            
+            </form:content>
+            </form:SimpleForm>
+            <!-- <l:Grid defaultSpan="XL3 L3 M6">
+                <HBox alignItems="Inherit" justifyContent="SpaceAround">
+                    <Label
+                        text="Code"
+                        required="true"
+                        class="sapUiSmallMarginTop"
+                        showColon="true"
+                    />
+                    <Input value="" />
+                </HBox>
+                <HBox alignItems="Baseline" justifyContent="SpaceAround">
+                    <Label
+                        text="Name"
+                        class="sapUiSmallMarginTop"
+                        required="true"
+                        showColon="true"
+                    />
+                    <Input value="" />
+                </HBox>
+                <HBox alignItems="Baseline" justifyContent="SpaceAround">
+                    <Label
+                        text="Template Description"
+                        required="true"
+                        class="sapUiSmallMarginTop"
+                        showColon="true"
+                    />
+                    <Input value="" />
+                </HBox>
+                <HBox alignItems="Baseline" justifyContent="SpaceAround">
+                    <Label
+                        text="Status Name"
+                        required="true"
+                        class="sapUiSmallMarginTop"
+                        showColon="true"
+                    />
+                    <ComboBox selectedKey="">
+                        <items>
+                            <core:Item key="Received" text="Received" />
+                            <core:Item key="Forward" text="Forward" />
+                            <core:Item key="Tender" text="Tender" />
+                            <core:Item key="Delivered" text="Delivered" />
+                            <core:Item key="Hold" text="Hold" />
+                            <core:Item key="Research" text="Research" />
+                        </items>
+                    </ComboBox>
+                </HBox>
+                <HBox alignItems="Baseline" justifyContent="SpaceAround">
+                    <Label
+                        text="Status Name"
+                        required="true"
+                        class="sapUiSmallMarginTop"
+                        showColon="true"
+                    />
+                    <HBox >
+                    <ComboBox selectedKey="">
+                        <items>
+                            <core:Item key="Received" text="Received" />
+                            <core:Item key="Forward" text="Forward" />
+                            <core:Item key="Tender" text="Tender" />
+                            <core:Item key="Delivered" text="Delivered" />
+                            <core:Item key="Hold" text="Hold" />
+                            <core:Item key="Research" text="Research" />
+                        </items>
+                    </ComboBox>
+                <ComboBox selectedKey="">
+                        <items>
+                            <core:Item key="Received" text="Received" />
+                            <core:Item key="Forward" text="Forward" />
+                            <core:Item key="Tender" text="Tender" />
+                            <core:Item key="Delivered" text="Delivered" />
+                            <core:Item key="Hold" text="Hold" />
+                            <core:Item key="Research" text="Research" />
+                        </items>
+                    </ComboBox>
+                    </HBox>
+                    </HBox>
+                <VBox justifyContent="SpaceAround">
+                <CheckBox text="Is Active" />
+                </VBox>
+                
+                
+                </l:Grid> -->
+                
+                
+        </content>
+        <beginButton>
+            <Button
+                text="Cancel"
+                press=".onCreateUserFormClosePress"
+            />
+        </beginButton>
+
+        <endButton>
+            <Button
+                text="Save"
+                type="Emphasized"
+                icon="sap-icon://save"
+                press=".onSaveNewUser"
+            />
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

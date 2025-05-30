@@ -1,0 +1,133 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:form="sap.ui.layout.form"
+>
+    <Dialog
+        id="CreatePackageStatusesDialog"
+        title="Package Statuses"
+        contentWidth="auto"
+        contentHeight="auto"
+        class="CreateUserDialog"
+    >
+        <customHeader>
+            <Bar>
+                <contentLeft>
+                    <Title text="Create a Status" />
+                </contentLeft>
+                <contentRight>
+                    <Button
+                        icon="sap-icon://decline"
+                        type="Transparent"
+                        press=".onCreateEmailClosePress"
+                    />
+                </contentRight>
+            </Bar>
+        </customHeader>
+
+        <content>
+            <form:SimpleForm layout="ResponsiveGridLayout">
+                <form:content>
+                    <Label
+                        text="Code"
+                        required="true"
+                    />
+                    <Input
+                        value="{requestpackageModel>/Package_Statuses/Code}"
+                    />
+                    <Label
+                        text="Description"
+                        required="true"
+                    />
+                    <Input value="{requestpackageModel>/Package_Statuses/Description}" />
+                    <Label text="Templates" />
+                    <Select selectedKey="{requestpackageModel>/Package_Statuses/Templates}">
+                        <core:Item
+                            key="1"
+                            text="Please Choose:"
+                        />
+                        <core:Item
+                            key="Default_Forward"
+                            text="Default Forward"
+                        />
+                        <core:Item
+                            key="Default_Tender"
+                            text="Default Tender"
+                        />
+                        <core:Item
+                            key="Default_Received"
+                            text="Default Received"
+                        />
+                        <core:Item
+                            key="Default_Refused"
+                            text="Default Refused"
+                        />
+                    </Select>
+                    <Label text="Type" />
+                    <Select selectedKey="{requestpackageModel>/Package_Statuses/Type}">
+                        <core:Item
+                            key="Normal"
+                            text="Normal"
+                        />
+                        <core:Item
+                            key="Exception"
+                            text="Exception"
+                        />
+                    </Select>
+                    <Label
+                        text="Color Picker"
+                        required="true"
+                    />
+                    <Input
+                        id="colorLC"
+                        value="{requestpackageModel>/Package_Statuses/ColorPicker}"
+                        type="Text"
+                        width="200px"
+                        placeholder="Enter Color ..."
+                        showValueHelp="true"
+                        valueHelpRequest="openLiveChangeSample"
+                        change="handleInputChange"
+                    />
+                    <Label
+                        text="Order Flow"
+                        required="true"
+                    />
+                    <Input value="{requestpackageModel>/Package_Statuses/OrderFlow}" />
+
+                    <Label text="Status" />
+                    <Select selectedKey="{requestpackageModel>/Package_Statuses/Status}">
+                        <core:Item
+                            key="Active"
+                            text="Active"
+                        />
+                        <core:Item
+                            key="InActive"
+                            text="InActive"
+                        />
+                    </Select>
+                    <HBox >
+                    <CheckBox text="Photo Required" selected="{requestpackageModel>/Package_Statuses/PhotoRequired}"></CheckBox>
+                    <CheckBox text="Signature Required" selected="{requestpackageModel>/Package_Statuses/SignatureRequired}"></CheckBox>
+                    <CheckBox text="Hide Tracking" selected="{requestpackageModel>/Package_Statuses/HideTracking}"></CheckBox>
+                    </HBox>
+                </form:content>
+            </form:SimpleForm>
+        </content>
+        <beginButton>
+            <Button
+                text="Cancel"
+                press=".onCreateUserFormClosePress"
+            />
+        </beginButton>
+
+        <endButton>
+            <Button
+                text="Save"
+                type="Emphasized"
+                icon="sap-icon://save"
+                press=".onAddNewData"
+            />
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,51 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:form="sap.ui.layout.form">
+    
+    <Popover
+        id="columnSettingsPopover"
+        title="Column Selection"
+        placement="Bottom"
+        showHeader="true"
+        contentWidth="190px"
+        contentHeight="230px"
+        >
+
+        <VBox class="sapUiSmallMargin">
+            <SearchField placeholder="Search" liveChange="onSearchColumn" />
+            <CheckBox id="CHK" text="Select All" select="onSelectAllColumns" useEntireWidth="true" />
+            <List id="CHKList"
+			items="{requestpackageModel>/tableCollection}"
+			selectionChange=".onSelectionChange"
+			mode="MultiSelect"
+			includeItemInSelection="true">
+            <StandardListItem title="{requestpackageModel>title}" selected="{requestpackageModel>selected}"></StandardListItem>
+            </List>
+            <!-- <CheckBox id="ImageCHK" text="Image"></CheckBox>
+            <CheckBox id="StatusCHK" text="Status"></CheckBox>
+            <CheckBox id="IntCHK" text="Int #"></CheckBox>
+            <CheckBox id="RefCHK" text="Ref #"></CheckBox>
+            <CheckBox id="RefDateCHK" text="Ref Date"></CheckBox>
+            <CheckBox id="PackageCHK" text="Package"></CheckBox>
+            <CheckBox id="DeliveryCHK" text="Delivery Location"></CheckBox>
+            <CheckBox id="WeightCHK" text="Weight"></CheckBox>
+            <CheckBox id="ValueCHK" text="Value"></CheckBox>
+            <CheckBox id="MailBoxCHK" text="Mail Box"></CheckBox>
+            <CheckBox id="StorageCHK" text="Storage Location"></CheckBox>
+            <CheckBox id="BinCHK" text="Bin"></CheckBox>
+            <CheckBox id="NotesCHK" text="Notes"></CheckBox> -->
+            
+        </VBox>
+
+        <footer>
+            <Bar>
+                <contentRight>
+                    <Button text="Cancel" press="onCancelColumnPopover" />
+                    <Button text="Apply" type="Emphasized" press="onApplyColumnChanges" />
+                </contentRight>
+            </Bar>
+        </footer>
+    </Popover>
+</core:FragmentDefinition>

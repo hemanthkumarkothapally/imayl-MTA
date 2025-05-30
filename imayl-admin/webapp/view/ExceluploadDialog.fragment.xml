@@ -1,0 +1,31 @@
+<core:FragmentDefinition xmlns:unified="sap.ui.unified"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <Dialog title="Upload Excel File" >
+    <content>
+    <unified:FileUploader id="fileUploader"
+    class="fileUploader"
+    name="myFileUpload"
+    tooltip="Upload your file to the local server"
+    fileType="xls,xlsx"
+    mimeType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
+    change="onExcelFileChange"></unified:FileUploader>
+            </content>
+            <beginButton>
+            <Button
+                text="Cancel"
+                press=".onExcelDialogClosePress"
+            />
+            
+        </beginButton>
+
+        <endButton>
+            <Button
+			text="Upload File"
+			press="onExcelUpload"/>
+            
+        </endButton>
+    
+    </Dialog>
+</core:FragmentDefinition>
