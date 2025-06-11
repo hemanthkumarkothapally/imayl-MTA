@@ -1,0 +1,159 @@
+{
+    "navigation": [
+      {
+        "text": "All Packages",
+        "icon": "sap-icon://circle-task",
+        "key": "1",
+        "expanded":true
+      },
+      {
+        "text": "Receive a Package",
+        "icon": "sap-icon://database",
+        "key": "2",
+        "expanded":true
+      },
+      {
+        "text": "My Packages",
+        "icon": "sap-icon://donut-chart",
+        "key": "3",
+        "expanded":true
+      },
+      {
+        "text": "Reports",
+        "icon": "sap-icon://inspection",
+        "key": "4",
+        "expanded":false,
+        "children": [
+          {
+            "text": "SLA Compliance",
+            "icon": "sap-icon://tree",
+            "key": "4a"
+          },
+          {
+            "text": "Pending Delivery",
+            "icon": "sap-icon://tree",
+            "key": "4b"
+          },
+          {
+            "text": "Researched Packages",
+            "icon": "sap-icon://tree",
+            "key": "4c"
+          },
+          {
+            "text": "User Productivity",
+            "icon": "sap-icon://tree",
+            "key": "4d"
+          }
+        ]
+      },
+      {
+        "text": "Set Up",
+        "icon": "sap-icon://wrench",
+        "key": "5",
+        "expanded":false,
+        "children": [
+          { "text": "Carriers", "icon": "sap-icon://shipping-status", "key": "5a" },
+          { "text": "Package Types", "icon": "sap-icon://product", "key": "5b" },
+          { "text": "Package Statuses", "icon": "sap-icon://status-positive", "key": "5c" },
+          { "text": "Locations", "icon": "sap-icon://locate-me", "key": "5d" },
+          { "text": "User Management", "icon": "sap-icon://person-placeholder", "key": "5e" },
+          { "text": "Calendar", "icon": "sap-icon://accelerated", "key": "5f" },
+          { "text": "Delivery Locations", "icon": "sap-icon://locate-me", "key": "5g" },
+          { "text": "Roles", "icon": "sap-icon://family-care", "key": "5h" }
+        ]
+      },
+      {
+        "text": "User Log",
+        "icon": "sap-icon://tree",
+        "key": "6",
+        "expanded":true
+      },
+      {
+        "text": "Email Editor",
+        "icon": "sap-icon://email",
+        "key": "7",
+        "expanded":true
+      }
+    ],
+        "columns": [
+          { "label": "Color Code", "property": "Color_Code", "width": "9rem" },
+          { "label": "Received Date", "property": "Received_Date", "width": "9rem" },
+          { "label": "Updated Date", "property": "Updated_Date", "width": "9rem" },
+          { "label": "Package Logger", "property": "Package_Logger", "width": "9rem" },
+          { "label": "Ship From", "property": "Ship_From", "width": "9rem" },
+          { "label": "From Address", "property": "From_Address", "width": "9rem" },
+          { "label": "Ship To", "property": "Ship_To", "width": "9rem" },
+          { "label": "To Address", "property": "To_Address", "width": "9rem" },
+          { "label": "Carrier", "property": "Carrier", "width": "9rem" },
+          { "label": "Ext #", "property": "Ext_Id", "width": "9rem" },
+          { "label": "Int #", "property": "Int_Id", "width": "9rem" },
+          { "label": "Status", "property": "Status", "width": "9rem" },
+          { "label": "Ref #", "property": "Ref_Id", "width": "9rem" },
+          { "label": "Ref Date", "property": "Ref_Date", "width": "9rem" },
+          { "label": "Notes", "property": "Notes", "width": "9rem" },
+          { "label": "Priority", "property": "Priority", "width": "9rem" },
+          { "label": "Storage Location", "property": "Storage_Location", "width": "9rem" },
+          { "label": "Bin", "property": "Bin", "width": "9rem" },
+          { "label": "Delivery Location", "property": "Delivery_Location", "width": "9rem" },
+          { "label": "Package Type", "property": "Package_Type", "width": "9rem" }
+        ],
+        "Carriers_table_columns": [
+          { "label": "Name", "property": "Name" },
+          { "label": "Description", "property": "Description"},
+          { "label": "Status", "property": "Status"},
+          { "label": "Track URL", "property": "ShipmentTrackingURL" }        
+        ],
+        "Package_Types_table_columns": [
+          { "label": "Code", "property": "Code" },
+          { "label": "Name", "property": "Name"},
+          { "label": "Description", "property": "Description" },
+          { "label": "Status", "property": "Status" }        
+        ],
+        "Package_Statuses_table_columns": [
+          { "label": "Code", "property": "Code" },
+          { "label": "Description", "property": "Description"},
+          { "label": "Type", "property": "Type"},
+          { "label": "Color Picker", "property": "ColorPicker"},
+          { "label": "Order Flow", "property": "OrderFlow"},
+          { "label": "Photo Required", "property": "PhotoRequired"},
+          { "label": "Signature Required", "property": "SignatureRequired"},
+          { "label": "Hide Tracking", "property": "HideTracking"},
+          { "label": "Status", "property": "Status"}
+        ],
+        "Locations_table_columns": [
+          { "label": "Code", "property": "Code" },
+          { "label": "Name", "property": "Name"},
+          { "label": "Address", "property": "Address"},
+          { "label": "City", "property": "City"},
+          { "label": "State", "property": "State"},
+          { "label": "Zipcode", "property": "Zipcode"},
+          { "label": "Country", "property": "Country"},
+          { "label": "Phone", "property": "Phone"},
+          { "label": "Remarks", "property": "Remarks"},
+          { "label": "Status", "property": "Status"}
+        ],
+        "Calendars_table_columns": [
+          { "label": "Start Date Time", "property": "StartDateTime" },
+          { "label": "End Date Time", "property": "EndDateTime"},
+          { "label": "Reason", "property": "Reason"}
+        ],
+        "Delivery_Locations_table_columns": [
+          { "label": "Code", "property": "LocationCode" },
+          { "label": "Name", "property": "LocationName"},
+          { "label": "Remarks", "property": "LocationRemarks"},
+          { "label": "Status", "property": "LocationStatus" }        
+        ],
+        "Email":{
+          "Code"                 : "",
+          "Name"                 : "",
+          "Template_Description" : "",
+          "Is_Active"            : "",
+          "Status_Name"          : "",
+          "Place_Holder"         : "",
+          "Subject"              : "",
+          "Email_Body"           : "",
+          "SMS_Text"             : ""
+        }
+      
+  }
+  

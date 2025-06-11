@@ -6,13 +6,18 @@ sap.ui.define([
     "sap/ui/model/FilterOperator",
     'sap/ui/unified/ColorPickerPopover',
     "sap/ui/unified/ColorPickerDisplayMode",
-    "sap/ui/unified/ColorPickerMode"
-], (Controller, MessageToast, Filter, FilterOperator, ColorPickerPopover, ColorPickerDisplayMode, ColorPickerMode) => {
+    "sap/ui/unified/ColorPickerMode",
+    "sap/m/MessageBox",
+    "sap/ui/core/BusyIndicator",
+    "sap/m/Text",
+    "sap/m/Label",
+    "sap/ui/core/Fragment"
+], (Controller, MessageToast, MessageBox, Filter, FilterOperator, ColorPickerPopover, ColorPickerDisplayMode, ColorPickerMode, BusyIndicator,Fragment) => {
     "use strict";
 
     return Controller.extend("com.db.admin.imayladmin.controller.Home", {
         onInit() {
-            this._oToday=new Date()
+            this._oToday = new Date()
             this._oLast7Day = new Date();
             this._oLast7Day.setDate(this._oToday.getDate() - 7);
             this._aButton = "";
@@ -34,6 +39,10 @@ sap.ui.define([
             // obj[packageformDate] = newdate;
             // obj[popovertoDate] = newdate;
             // obj[popoverfromdate] = newdate;
+
+
+
+
             let oModel = this.getOwnerComponent().getModel("requestpackageModel");
             oModel.setData({
                 packageformDate: new Date(),
@@ -41,7 +50,7 @@ sap.ui.define([
                 popoverfromdate: new Date(),
                 requestapackageformtablecount: 1,
                 tableData: [{
-                    Image: "1234",
+                    Image: "",
                     Status: "Received",
                     IntNumber: "",
                     RefNumber: "",
@@ -92,6 +101,28 @@ sap.ui.define([
                     Reason: ""
                 }
             });
+            this._buildTable();
+        },
+        _BaseUrl: function () {
+            return sap.ui.require.toUrl("com/db/admin/imayladmin");
+        },
+        _buildTable: function () {
+            var oTable = this.byId("All_packades_Table");
+            var aColumnData = this.getOwnerComponent().getModel("ImaylModel").getProperty("/columns");
+
+            aColumnData.forEach(function (oCol) {
+                var oColumn = new sap.ui.table.Column({
+                    label: new sap.m.Label({ text: oCol.label }),
+                    width: oCol.width,
+                    filterProperty: oCol.label,
+                    template: new sap.m.Text({
+                        text: "{" + oCol.property + "}" // Bind to the field name
+                    })
+                });
+                oTable.addColumn(oColumn);
+            });
+
+            oTable.bindRows("/All_Packages");
         },
         _setToggleButtonTooltip: function (bLarge) {
             let oToggleButton = this.byId('sideNavigationToggleButton');
@@ -151,15 +182,23 @@ sap.ui.define([
                     break;
 
                 case "5a":
+                    this._loadCounts("Carriers");
+                    this._buildSetupTables("Carriers_table", "/Carriers_table_columns");
                     oNavContainer.to(this.byId("Carriersepage"));
                     break;
                 case "5b":
+                    this._loadCounts("Package_Types");
+                    this._buildSetupTables("Package_Types_table", "/Package_Types_table_columns");
                     oNavContainer.to(this.byId("PackageTypespage"));
                     break;
                 case "5c":
+                    this._loadCounts("Package_Statuses");
+                    this._buildSetupTables("Package_Statuses_table", "/Package_Statuses_table_columns");
                     oNavContainer.to(this.byId("PackageStatusespage"));
                     break;
                 case "5d":
+                    this._loadCounts("Locations");
+                    this._buildSetupTables("Locations_table", "/Locations_table_columns");
                     oNavContainer.to(this.byId("Locationspage"));
                     break;
                 case "5e":
@@ -167,12 +206,16 @@ sap.ui.define([
                     this._applySearchFilter("userstable");
                     break;
                 case "5f":
+                    this._buildSetupTables("Calendars_table", "/Calendars_table_columns");
                     oNavContainer.to(this.byId("Calendarpage"));
                     break;
                 case "5g":
+                    this._loadCounts("Delivery_Locations");
+                    this._buildSetupTables("Delivery_Locations_table", "/Delivery_Locations_table_columns");
                     oNavContainer.to(this.byId("DeliveryLocationspage"));
                     break;
                 case "5h":
+                    this._loadCounts("Roles");
                     oNavContainer.to(this.byId("Rolespage"));
                     break;
 
@@ -188,6 +231,69 @@ sap.ui.define([
                 default:
                     oNavContainer.to(this.byId("AllPackagespage"));
                     break;
+            }
+        },
+        _buildSetupTables: function (sTableId, oProperty) {
+            var oTable = this.byId(sTableId);
+            var aColumnData = this.getOwnerComponent().getModel("ImaylModel").getProperty(oProperty);
+
+            // Clear existing columns if needed
+            oTable.removeAllColumns();
+
+            // Add dynamic columns
+            aColumnData.forEach(function (oCol) {
+                var oColumn = new sap.ui.table.Column({
+                    label: new sap.m.Label({ text: oCol.label }),
+
+                    filterProperty: oCol.label,
+                    template: new sap.m.Text({
+                        text: "{" + oCol.property + "}" // Bind to the field name
+                    })
+                });
+                oTable.addColumn(oColumn);
+            });
+            if (sTableId != "Calendars_table") {
+                let oEditHandler;
+                switch (sTableId) {
+                    case "Carriers_table":
+                        oEditHandler = this.onEditCarrier.bind(this);
+                        break;
+                    case "Package_Types_table":
+                        oEditHandler = this.onEditPackageType.bind(this);
+                        break;
+                    case "Package_Statuses_table":
+                        oEditHandler = this.onEditPackageStatuses.bind(this);
+                        break;
+                    case "Locations_table":
+                        oEditHandler = this.onEditLocations.bind(this);
+                        break;
+                    case "Delivery_Locations_table":
+                        oEditHandler = this.onEditDeliveryLocations.bind(this);
+                        break;
+                }
+                // Add Action column
+                var oActionColumn = new sap.ui.table.Column({
+                    label: new sap.m.Label({ text: "Action" }),
+                    template: new sap.m.HBox({
+                        items: [
+                            new sap.m.Button({
+                                icon: "sap-icon://edit",
+                                type: "Transparent",
+                                tooltip: "Edit",
+                                press: oEditHandler
+                            }),
+                            new sap.m.Button({
+                                icon: "sap-icon://delete",
+                                type: "Transparent",
+                                tooltip: "Delete",
+                                press: this.onDeleteRowData.bind(this)
+                            })
+                        ],
+                        justifyContent: "SpaceAround"
+                    }),
+                    width: "5rem"
+                });
+                oTable.addColumn(oActionColumn);
             }
         },
         onFilterselection: function (oEvent) {
@@ -326,6 +432,37 @@ sap.ui.define([
                 // Show success message
                 sap.m.MessageToast.show("Row deleted successfully");
             }
+
+        },
+        onSuggest: function () {
+            this.getOwnerComponent().getModel("requestpackageModel").setProperty("/Ship_To_details", undefined);
+
+        },
+        onSuggestItemSelection: function (oEvent) {
+            let sPath = oEvent.getParameters("selectedItem").selectedItem.getBindingContext().getPath();
+            let oModel = this.getView().getModel(); // or this.getView().getModel("yourModelName")
+            oModel.bindContext(sPath).requestObject().then(function (oData) {
+                console.log("Fetched object from backend:", oData);
+                this.getOwnerComponent().getModel("requestpackageModel").setProperty("/Ship_To_details", oData);
+
+            }.bind(this)).catch(function (oError) {
+                console.error("Error fetching object:", oError);
+            });
+            // let oShipTo_Form= {
+            //     firstName:"",
+            //     lastName:"",
+            //     department:"",
+            //     emailID:"",
+            //     location:"",
+            //     address1:"",
+            //     city:"",
+            //     lastName:"",
+            //     lastName:"",
+            //     lastName:"",
+            //     lastName:"",
+            //     lastName:"",
+            //  }
+            // this.getOwnerComponent().getModel("requestpackageModel").setProperty("/ShipTo_Form", oShipTo_Form);
 
         },
         onOpenColumnftlter: function (oEvent) {
@@ -669,16 +806,25 @@ sap.ui.define([
                 this.CreateEmailDialog = sap.ui.xmlfragment("com.db.admin.imayladmin.view.CreateEmail", this);
                 this.getView().addDependent(this.CreateEmailDialog);
             }
+            
+            let oImaylmodel= this.getOwnerComponent().getModel("ImaylModel").getData();
+             // Create a deep copy using jQuery.extend
+            this._initialImaylModel = jQuery.extend(true, {}, oImaylmodel);
             this.CreateEmailDialog.open();
         },
+        oncloseEmail:function(){
+            console.log(this.getOwnerComponent().getModel("ImaylModel"));
+            this.getOwnerComponent().getModel("ImaylModel").setProperty("/Email", this._initialImaylModel.Email)
+            this.CreateEmailDialog.close();
+        },
         onAddCarrier: function () {
-            let oCarriers={
+            let oCarriers = {
                 Description: "",
                 Name: "",
                 ShipmentTrackingURL: null,
                 Status: "Active"
             }
-            this.getOwnerComponent().getModel("requestpackageModel").setProperty("/Carriers",oCarriers)
+            this.getOwnerComponent().getModel("requestpackageModel").setProperty("/Carriers", oCarriers)
             if (!this.CreateCarrierDialog) {
                 this.CreateCarrierDialog = sap.ui.xmlfragment("com.db.admin.imayladmin.view.CreateCarrier", this);
                 this.getView().addDependent(this.CreateCarrierDialog);
@@ -696,7 +842,7 @@ sap.ui.define([
             this.CreateCarrierDialog.open();
         },
         onAddPackageType: function () {
-            let oPackage_Types= {
+            let oPackage_Types = {
                 Code: "",
                 Name: "",
                 Description: null,
@@ -719,7 +865,7 @@ sap.ui.define([
             this.CreatePackageTypeDialog.open();
         },
         onAddLocations: function () {
-            let oLocations= {
+            let oLocations = {
                 Code: "",
                 Name: "",
                 Address: "",
@@ -742,7 +888,7 @@ sap.ui.define([
         onEditLocations: function (oEvent) {
             let oData = oEvent.getSource().getBindingContext().getObject()
             this.getOwnerComponent().getModel("requestpackageModel").setProperty("/Locations", oData);
-            
+
             if (!this.CreateLocationsDialog) {
                 this.CreateLocationsDialog = sap.ui.xmlfragment("com.db.admin.imayladmin.view.CreateLocations", this);
                 this.getView().addDependent(this.CreateLocationsDialog);
@@ -759,7 +905,7 @@ sap.ui.define([
         onEditRoles: function (oEvent) {
             let oData = oEvent.getSource().getBindingContext().getObject()
             this.getOwnerComponent().getModel("requestpackageModel").setProperty("/Roles", oData);
-            
+
             if (!this.CreateRolesDialog) {
                 this.CreateRolesDialog = sap.ui.xmlfragment("com.db.admin.imayladmin.view.CreateRoles", this);
                 this.getView().addDependent(this.CreateRolesDialog);
@@ -767,7 +913,7 @@ sap.ui.define([
             this.CreateRolesDialog.open();
         },
         onAddDeliveryLocations: function () {
-            let oDelivery_Locations= {
+            let oDelivery_Locations = {
                 LocationCode: "",
                 LocationName: "",
                 LocationStatus: "Active",
@@ -784,7 +930,7 @@ sap.ui.define([
         onEditDeliveryLocations: function (oEvent) {
             let oData = oEvent.getSource().getBindingContext().getObject()
             this.getOwnerComponent().getModel("requestpackageModel").setProperty("/Delivery_Locations", oData);
-            
+
             if (!this.CreateDeliveryLocationsDialog) {
                 this.CreateDeliveryLocationsDialog = sap.ui.xmlfragment("com.db.admin.imayladmin.view.CreateDeliveryLocations", this);
                 this.getView().addDependent(this.CreateDeliveryLocationsDialog);
@@ -795,7 +941,7 @@ sap.ui.define([
         _countOfPackagestatus: function () {
             const oModel = this.getView().getModel();
             const oBindList = oModel.bindList("/Package_Statuses");
-        
+
             return oBindList.requestContexts()
                 .then(function (aContexts) {
                     return aContexts.length;
@@ -805,16 +951,16 @@ sap.ui.define([
                     return 0;
                 });
         },
-        onAddPackageStatuses:async function () {
+        onAddPackageStatuses: async function () {
             const iCount = await this._countOfPackagestatus(); // wait for count
 
-            let oPackage_Statuses= {
+            let oPackage_Statuses = {
                 Code: "",
                 Description: "",
                 Templates: "",
                 Type: "Normal",
                 ColorPicker: "",
-                OrderFlow: iCount+1,
+                OrderFlow: iCount + 1,
                 Status: "Active",
                 PhotoRequired: false,
                 SignatureRequired: false,
@@ -831,7 +977,7 @@ sap.ui.define([
         onEditPackageStatuses: function (oEvent) {
             let oData = oEvent.getSource().getBindingContext().getObject()
             this.getOwnerComponent().getModel("requestpackageModel").setProperty("/Package_Statuses", oData);
-            
+
             if (!this.CreatePackageStatusesDialog) {
                 this.CreatePackageStatusesDialog = sap.ui.xmlfragment("com.db.admin.imayladmin.view.CreatePackageStatuses", this);
                 this.getView().addDependent(this.CreatePackageStatusesDialog);
@@ -863,7 +1009,7 @@ sap.ui.define([
         handleLiveChange: function (oEvent) {
             var oView = this.getView();
         },
-        onSelectCalenderRow:function(oEvent){
+        onSelectCalenderRow: function (oEvent) {
             var oTable = oEvent.getSource();
             var iSelectedIndex = oTable.getSelectedIndex();
             if (iSelectedIndex >= 0) {
@@ -875,14 +1021,136 @@ sap.ui.define([
 
                 }
             }
-            else{
-                let oCalendars= {
+            else {
+                let oCalendars = {
                     EndDateTime: this._oToday.toISOString().split("T")[0],
                     StartDateTime: this._oLast7Day.toISOString().split("T")[0],
                     Reason: ""
-                 }
+                }
                 this.getOwnerComponent().getModel("requestpackageModel").setProperty("/Calendars", oCalendars);
 
+            }
+        },
+        onSaveCalenderRow: function () {
+            this._PostData("/Calendars", "Calendars");
+            let oCalendars = {
+                EndDateTime: this._oToday.toISOString().split("T")[0],
+                StartDateTime: this._oLast7Day.toISOString().split("T")[0],
+                Reason: ""
+            }
+            this.getOwnerComponent().getModel("requestpackageModel").setProperty("/Calendars", oCalendars);
+
+        },
+        onDeleteCalenderRow: function () {
+            let sSelectedID = this.getOwnerComponent().getModel("requestpackageModel").getProperty("/Calendars").ID;
+            if (!sSelectedID) {
+                MessageToast.show("Please select row");
+            }
+            else {
+                let sPath = "/Calendars(" + sSelectedID + ")";
+                this._DeleteData(sPath, "Calendars")
+            }
+
+        },
+        _loadCounts: async function (sTableName) {
+            let sActiveTileId = "Active_" + sTableName;
+            let sInActiveTileId = "InActive_" + sTableName;
+            let sPath = "/CountData(tablename='" + sTableName + "')";
+
+            $.ajax({
+                url: this._BaseUrl() + "/odata/v4/imailservice" + sPath,
+                type: "GET",
+                dataType: "json", // expected response type
+                success: function (data) {
+                    let iCount = data?.value?.Active_count;
+                    this.byId(sActiveTileId).setValue(iCount);
+                    iCount = data?.value?.InActive_count
+                    this.byId(sInActiveTileId).setValue(iCount);
+                }.bind(this),
+                error: function (xhr, status, error) {
+                    console.error("Error:", error); // handle error
+                }
+            });
+
+        },
+        onTilePress: function (oEvent) {
+            BusyIndicator.show(0);
+            let sTileId = oEvent.getParameters().id.split("--")[2];
+            switch (sTileId) {
+                case "Active_Carriers_Tile":
+                    this._filterTable("Carriers_table", "Active");
+                    break;
+                case "InActive_Carriers_Tile":
+                    this._filterTable("Carriers_table", "InActive");
+                    break;
+                case "Total_Carriers_Tile":
+                    this._filterTable("Carriers_table");
+                    break;
+                case "Active_Package_Types_Tile":
+                    this._filterTable("Package_Types_table", "Active");
+                    break;
+                case "InActive_Package_Types_Tile":
+                    this._filterTable("Package_Types_table", "InActive");
+                    break;
+                case "Total_Package_Types_Tile":
+                    this._filterTable("Package_Types_table");
+                    break;
+                case "Active_Package_Statuses_Tile":
+                    this._filterTable("Package_Statuses_table", "Active");
+                    break;
+                case "InActive_Package_Statuses_Tile":
+                    this._filterTable("Package_Statuses_table", "InActive");
+                    break;
+                case "Total_Package_Statuses_Tile":
+                    this._filterTable("Package_Statuses_table");
+                    break;
+                case "Active_Locations_Tile":
+                    this._filterTable("Locations_table", "Active");
+                    break;
+                case "InActive_Locations_Tile":
+                    this._filterTable("Locations_table", "InActive");
+                    break;
+                case "Total_Locations_Tile":
+                    this._filterTable("Locations_table");
+                    break;
+                case "Active_Delivery_Locations_Tile":
+                    this._filterTable("Delivery_Locations_table", "Active");
+                    break;
+                case "InActive_Delivery_Locations_Tile":
+                    this._filterTable("Delivery_Locations_table", "InActive");
+                    break;
+                case "Total_Delivery_Locations_Tile":
+                    this._filterTable("Delivery_Locations_table");
+                    break;
+                case "Active_Roles_Tile":
+                    this._filterTable("Roles_table", "Active");
+                    break;
+                case "InActive_Roles_Tile":
+                    this._filterTable("Roles_table", "InActive");
+                    break;
+                case "Total_Roles_Tile":
+                    this._filterTable("Roles_table");
+                    break;
+
+
+            }
+            setTimeout(() => {
+                BusyIndicator.hide();
+            }, 1500);
+
+        },
+        _filterTable: function (sTableId, sStatus) {
+            const oTable = this.byId(sTableId);
+            if (oTable) {
+                if (!sStatus) {
+                    oTable.getBinding().filter([]);
+                }
+                else {
+                    const oFilter = new sap.ui.model.Filter("Status", sap.ui.model.FilterOperator.EQ, sStatus);
+
+                    // Apply the filter to the table's binding
+                    oTable.getBinding().filter([oFilter]);
+                }
             }
         },
         _PostData: function (oProperty, aPage) {
@@ -894,45 +1162,47 @@ sap.ui.define([
             }
             else {
                 let sId = oNewData.ID;
-                let sPath = oProperty+`(${sId})`;
+                let sPath = oProperty + `(${sId})`;
                 console.log(sPath);
                 const sBaseUrl = sap.ui.require.toUrl("com/db/admin/imayladmin");
                 $.ajax({
-                    url: sBaseUrl+ "/odata/v4/imailservice"+sPath, // Adjust the URL and key
+                    url: sBaseUrl + "/odata/v4/imailservice" + sPath, // Adjust the URL and key
                     method: "PUT", // or use "PATCH" depending on the backend
                     contentType: "application/json",
                     data: JSON.stringify(oNewData),
                     success: function (response) {
-                        sap.m.MessageToast.show("Update successful");
+                        MessageToast.show("Update successful");
                         console.log("Success response:", response);
                     },
                     error: function (xhr, status, error) {
-                        sap.m.MessageBox.error("Update failed: " + error);
+                        MessageBox.error("Update failed: " + error);
                         console.error("Error:", xhr.responseText);
                     }
                 });
-                
-                
+
+                this.getView().getModel().refresh();
             }
             let sTableId = aPage + "_table"
             this.getView().byId(sTableId).getBinding("rows").refresh();
+            let sTileId = "Active_" + aPage
+            // this._loadCounts(sTileId,aPage);
 
         },
         onAddNewData: function (oEvent) {
-            let aDialogBoxId = oEvent.getSource().oParent.sId;
+            let oDialogBoxId = oEvent.getSource().oParent.sId;
 
-            switch (aDialogBoxId) {
+            switch (oDialogBoxId) {
                 case "CreateCarrierDialog":
-                    this._PostData("/Carriers", "Carriers")
-                    
+                    this._PostData("/Carriers", "Carriers");
+
                     this.CreateCarrierDialog.close();
                     break;
                 case "CreatePackageTypeDialog":
-                    this._PostData("/Package_Types", "Package_Types")
+                    this._PostData("/Package_Types", "Package_Types");
                     this.CreatePackageTypeDialog.close();
                     break;
                 case "CreatePackageStatusesDialog":
-                    this._PostData("/Package_Statuses", "Package_Statuses")
+                    this._PostData("/Package_Statuses", "Package_Statuses");
                     this.CreatePackageStatusesDialog.close();
                     break;
                 case "CreateLocationsDialog":
@@ -955,9 +1225,17 @@ sap.ui.define([
             }
         },
         onCreateEmailClosePress: function (oEvent) {
-            let aDialogBoxId = oEvent.getSource().oParent.oParent.sId;
+            // let aDialogBoxId = oEvent.getSource().oParent.oParent.sId;
+            let oSource = oEvent.getSource();
+            let oDialogBoxId;
 
-            switch (aDialogBoxId) {
+            // Traverse up until Dialog is found
+            while (oSource && !(oSource instanceof sap.m.Dialog)) {
+                oSource = oSource.getParent();
+            }
+
+            oDialogBoxId = oSource.getId();
+            switch (oDialogBoxId) {
                 case "CreateCarrierDialog":
                     this.CreateCarrierDialog.close();
                     break;
@@ -983,28 +1261,31 @@ sap.ui.define([
 
             }
         },
-        _DeleteData:function(sPath,sProperty){
+        _DeleteData: function (sPath, sProperty) {
             let oModel = this.getView().getModel();
             oModel.delete(sPath).then(() => {
-                MessageToast.show(sProperty+"Deleted successfully");
+                MessageToast.show(sProperty + "Deleted successfully");
             }).catch((oError) => {
                 MessageToast.show("Delete failed");
                 console.error("Delete failed:", oError);
             });
             let sTableId = sProperty + "_table"
             this.getView().byId(sTableId).getBinding("rows").refresh();
+            this.getView().getModel().refresh();
         },
         onDeleteRowData: function (oEvent) {
-            let sFullId = oEvent.getSource().getId();
+            // oEvent.getSource().getParent().getParent().getParent().getId()
+            // 'application-comdbadminimayladmin-display-component---Home--Carriers_table'
+            let sFullId = oEvent.getSource().getParent().getParent().getParent().getId();
             var oView = this.getView();
             var sLocalId = oView.getLocalId(sFullId);
-            let sButtonId=sLocalId.split("-")[0];
-            let sPath=oEvent.getSource().getParent().getBindingContext().getPath();
-            switch (sButtonId) {
-                case "Carriers_delete":
+            let sTableId = sFullId.split("--")[2];
+            let sPath = oEvent.getSource().getParent().getBindingContext().getPath();
+            switch (sTableId) {
+                case "Carriers_table":
                     this._DeleteData(sPath, "Carriers")
                     break;
-                case "Package_Types_delete":
+                case "Package_Types_table":
                     this._DeleteData(sPath, "Package_Types")
                     break;
                 case "Package_Statuses_delete":

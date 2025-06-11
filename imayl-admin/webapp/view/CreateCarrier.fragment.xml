@@ -51,7 +51,7 @@
         <beginButton>
             <Button
                 text="Cancel"
-                press=".onCloseCarriersDialog"
+                press=".onCreateEmailClosePress"
             />
         </beginButton>
 

@@ -21,7 +21,7 @@
 			selectionChange=".onSelectionChange"
 			mode="MultiSelect"
 			includeItemInSelection="true">
-            <StandardListItem title="{requestpackageModel>title}" selected="{requestpackageModel>selected}"></StandardListItem>
+            <StandardListItem title="{requestpackageModel>title}" selected="true"></StandardListItem>
             </List>
             <!-- <CheckBox id="ImageCHK" text="Image"></CheckBox>
             <CheckBox id="StatusCHK" text="Status"></CheckBox>

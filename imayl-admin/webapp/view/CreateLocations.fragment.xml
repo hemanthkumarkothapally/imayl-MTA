@@ -7,9 +7,8 @@
     <Dialog
         id="CreateLocationsDialog"
         title="Locations"
-        contentWidth="70%"
         contentHeight="auto"
-        class="CreateUserDialog"
+        class="CreateLocationsDialog"
     >
         <customHeader>
             <Bar>
@@ -27,62 +26,87 @@
         </customHeader>
 
         <content>
-                    <l:Grid defaultSpan="XL6 M6 S12">
-                        <HBox justifyContent="SpaceBetween" alignItems="Center" alignContent="Center" height="3rem">
+        <form:SimpleForm editable="true" layout="ResponsiveGridLayout" >
                         <Label text="Code" required="true" showColon="true"/>
-                        <Input value="{requestpackageModel>/Locations/Code}"/>
-                        </HBox>
-                        <HBox justifyContent="SpaceBetween" alignItems="Center" alignContent="Center" height="3rem">
+                        <Input value="{requestpackageModel>/Locations/Code}">
+                        <layoutData >
+                        <l:GridData span="Xl6 M6 S12"></l:GridData>
+                        </layoutData>
+                        </Input>
                         <Label text="Name" required="true" showColon="true"/>
-                        <Input value="{requestpackageModel>/Locations/Name}" />
-                        </HBox>
-                        <HBox justifyContent="SpaceBetween" alignItems="Center" alignContent="Center" height="3rem">
+                        <Input value="{requestpackageModel>/Locations/Name}" >
+                        <layoutData >
+                        <l:GridData span="Xl6 M6 S12"></l:GridData>
+                        </layoutData>
+                        </Input>
+                        
                         <Label text="Address" required="true" showColon="true"/>
-                        <Input value="{requestpackageModel>/Locations/Address}" />
-                        </HBox>
-                        <HBox justifyContent="SpaceBetween" alignItems="Center" alignContent="Center" height="3rem">
+                        <Input value="{requestpackageModel>/Locations/Address}" >
+                        <layoutData >
+                        <l:GridData span="Xl6 M6 S12"></l:GridData>
+                        </layoutData>
+                        </Input>
+                        
                         <Label text="City" required="true" showColon="true"/>
-                        <Input value="{requestpackageModel>/Locations/City}" />
-                        </HBox>
-                        <HBox justifyContent="SpaceBetween" alignItems="Center" alignContent="Center" height="3rem">
+                        <Input value="{requestpackageModel>/Locations/City}" >
+                        <layoutData >
+                        <l:GridData span="Xl6 M6 S12"></l:GridData>
+                        </layoutData>
+                        </Input>
+                        
                         <Label text="State" required="true" showColon="true"/>
-                        <Input value="{requestpackageModel>/Locations/State}" />
-                        </HBox>
-                        <HBox justifyContent="SpaceBetween" alignItems="Center" alignContent="Center" height="3rem">
+                        <Input value="{requestpackageModel>/Locations/State}" >
+                        <layoutData >
+                        <l:GridData span="Xl6 M6 S12"></l:GridData>
+                        </layoutData>
+                        </Input>
+                        
                         <Label text="Country" showColon="true"/>
                         <Select selectedKey="{requestpackageModel>/Locations/Country}" >
                             <core:Item key="1" text="Please Choose:"/>
                             <core:Item key="Active" text="Active" />
                             <core:Item key="InActive" text="InActive" />
-                           
+                           <layoutData >
+                        <l:GridData span="Xl6 M6 S12"></l:GridData>
+                        </layoutData>
+                        
                         </Select>
-                        </HBox>
-                        <HBox justifyContent="SpaceBetween" alignItems="Center" alignContent="Center" height="3rem">
                         <Label text="Zipcode" required="true" showColon="true"/>
-                        <Input value="{requestpackageModel>/Locations/Zipcode}" />
-                        </HBox>
-                        <HBox justifyContent="SpaceBetween" alignItems="Center" alignContent="Center" height="3rem">
+                        <Input value="{requestpackageModel>/Locations/Zipcode}" >
+                        <layoutData >
+                        <l:GridData span="Xl6 M6 S12"></l:GridData>
+                        </layoutData>
+                        </Input>
+                        
                         <Label text="Phone" required="true" showColon="true"/>
-                        <Input value="{requestpackageModel>/Locations/Phone}" />
-                        </HBox>
-                        <HBox justifyContent="SpaceBetween" alignItems="Center" alignContent="Center" height="3rem">
+                        <Input value="{requestpackageModel>/Locations/Phone}" >
+                        <layoutData >
+                        <l:GridData span="Xl6 M6 S12"></l:GridData>
+                        </layoutData>
+                        </Input>
+                        
                         <Label text="Status" showColon="true"/>
                         <Select selectedKey="{requestpackageModel>/Locations/Status}" >
                             <core:Item key="Active" text="Active" />
                             <core:Item key="InActive" text="InActive" />
-                           
+                           <layoutData >
+                        <l:GridData span="Xl6 M6 S12"></l:GridData>
+                        </layoutData>
+                        
                         </Select>
-                        </HBox>
-                        <HBox justifyContent="SpaceBetween" alignItems="Center" alignContent="Center" height="3rem">
                         <Label text="Remarks" showColon="true"></Label>
-                        <Input value="{requestpackageModel>/Locations/Remarks}" ></Input>
-                        </HBox>
-                    </l:Grid>
-        </content>
+                        <Input value="{requestpackageModel>/Locations/Remarks}" >
+                        <layoutData >
+                        <l:GridData span="Xl6 M6 S12"></l:GridData>
+                        </layoutData>
+                        </Input>
+                        </form:SimpleForm>
+                                </content>
+
         <beginButton>
             <Button
                 text="Cancel"
-                press=".onCreateUserFormClosePress"
+                press=".onCreateEmailClosePress"
             />
         </beginButton>
 

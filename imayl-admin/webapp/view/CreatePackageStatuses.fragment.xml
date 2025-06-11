@@ -27,7 +27,7 @@
         </customHeader>
 
         <content>
-            <form:SimpleForm layout="ResponsiveGridLayout">
+            <form:SimpleForm editable="true" layout="ResponsiveGridLayout">
                 <form:content>
                     <Label
                         text="Code"
@@ -106,7 +106,7 @@
                             text="InActive"
                         />
                     </Select>
-                    <HBox >
+                    <HBox justifyContent="SpaceBetween">
                     <CheckBox text="Photo Required" selected="{requestpackageModel>/Package_Statuses/PhotoRequired}"></CheckBox>
                     <CheckBox text="Signature Required" selected="{requestpackageModel>/Package_Statuses/SignatureRequired}"></CheckBox>
                     <CheckBox text="Hide Tracking" selected="{requestpackageModel>/Package_Statuses/HideTracking}"></CheckBox>
@@ -117,7 +117,7 @@
         <beginButton>
             <Button
                 text="Cancel"
-                press=".onCreateUserFormClosePress"
+                press=".onCreateEmailClosePress"
             />
         </beginButton>
 

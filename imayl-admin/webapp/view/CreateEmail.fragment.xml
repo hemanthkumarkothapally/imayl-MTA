@@ -31,19 +31,19 @@
             <form:SimpleForm >
             <form:content>
              <Label text="Code*" required="true"/>
-                        <Input value="{Code}" />
+                        <Input value="{ImaylModel>/Email/Code}" />
 
                         <!-- Name -->
                         <Label text="Name*" required="true"/>
-                        <Input value="{Name}" />
+                        <Input value="{ImaylModel>/Email/Name}" />
 
                         <!-- Template Description -->
                         <Label text="Template Description"/>
-                        <Input value="{TemplateDescription}" />
+                        <Input value="{ImaylModel>/Email/Template_Description}" />
 
                         <!-- Status Name -->
                         <Label text="Status Name*" required="true"/>
-                        <Select selectedKey="{StatusName}">
+                        <Select selectedKey="{ImaylModel>/Email/Status_Name}">
                             <core:Item key="1" text="Please Choose:"/>
                             <core:Item key="Received" text="Received" />
                             <core:Item key="Forward" text="Forward" />
@@ -56,7 +56,7 @@
 
                         <!-- Place Holders -->
                         <Label text="Place Holders"/>
-                        <Select selectedKey="{PlaceHolders}">
+                        <Select selectedKey="{ImaylModel>/Email/Place_Holder}">
                             <core:Item key="1" text="Please Choose:"/>
                             <core:Item key="ShipTo" text="Ship To" />
                             <core:Item key="ShipFrom" text="Ship From" />
@@ -66,13 +66,13 @@
 
                         <!-- Is Active -->
                         <Label text="Is Active"/>
-                        <CheckBox selected="{IsActive}"/>
+                        <CheckBox selected="{ImaylModel>/Email/Is_Active}"/>
                         <Label text="Subject" required="true"></Label>
-                        <Input value="" ></Input>
+                        <Input value="{ImaylModel>/Email/Subject}" ></Input>
                         <Label text="Email Body" required="true"></Label>
-                        <richtexteditor:RichTextEditor ></richtexteditor:RichTextEditor>
+                        <richtexteditor:RichTextEditor id="Email_Body" value="{ImaylModel>/Email/Email_Body}"></richtexteditor:RichTextEditor>
                         <Label text="SMS Text" required="true"></Label>
-                        <richtexteditor:RichTextEditor ></richtexteditor:RichTextEditor>
+                        <richtexteditor:RichTextEditor id="Email_SMS" value="{ImaylModel>/Email/SMS_Text}"></richtexteditor:RichTextEditor>
             
             </form:content>
             </form:SimpleForm>
@@ -164,7 +164,7 @@
         <beginButton>
             <Button
                 text="Cancel"
-                press=".onCreateUserFormClosePress"
+                press=".oncloseEmail"
             />
         </beginButton>
 
@@ -173,7 +173,7 @@
                 text="Save"
                 type="Emphasized"
                 icon="sap-icon://save"
-                press=".onSaveNewUser"
+                press=".onAddNewData"
             />
         </endButton>
     </Dialog>

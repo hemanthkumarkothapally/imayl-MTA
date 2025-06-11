@@ -1,5 +1,6 @@
 .headerclass{
     background-color: #c1b4f0 !important;
+    height: 40px !important;
 }
 .formpanel{
     border: 1px solid #ccc;
@@ -24,6 +25,10 @@
 .Aliastableclass{
     margin-top: 20px;
     border: 1px solid #ccc;
+
+}
+.CreateLocationsDialog{
+    min-width: 50% !important;
 
 }
 .CreateUserDialog{
@@ -97,8 +102,7 @@
 
 }
 .allpackagesReceived{
-    color: white !important;
-    background-color: rgb(245, 216, 52);
+    background-color: rgb(245, 184, 70);
     border-radius: 0px;
     height: 75px !important;
 }

@@ -39,7 +39,6 @@
                         <HBox justifyContent="SpaceBetween" alignItems="Center" alignContent="Center" height="3rem">
                         <Label text="Status" showColon="true"/>
                         <Select selectedKey="{StatusName}" >
-                            <core:Item key="1" text="Please Choose:"/>
                             <core:Item key="Active" text="Active" />
                             <core:Item key="InActive" text="InActive" />
                            

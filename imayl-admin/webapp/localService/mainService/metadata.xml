@@ -17,6 +17,7 @@
                 </Collection>
             </Annotation>
             <EntityContainer Name="EntityContainer">
+                <EntitySet Name="All_Packages" EntityType="imailservice.All_Packages"/>
                 <EntitySet Name="Users" EntityType="imailservice.Users"/>
                 <EntitySet Name="Carriers" EntityType="imailservice.Carriers"/>
                 <EntitySet Name="Package_Types" EntityType="imailservice.Package_Types"/>
@@ -24,7 +25,34 @@
                 <EntitySet Name="Locations" EntityType="imailservice.Locations"/>
                 <EntitySet Name="Calendars" EntityType="imailservice.Calendars"/>
                 <EntitySet Name="Delivery_Locations" EntityType="imailservice.Delivery_Locations"/>
+                <FunctionImport Name="activeCarriersCount" Function="imailservice.activeCarriersCount"/>
             </EntityContainer>
+            <EntityType Name="All_Packages">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="Received_Date" Type="Edm.String" MaxLength="20"/>
+                <Property Name="Updated_Date" Type="Edm.String" MaxLength="20"/>
+                <Property Name="Package_Logger" Type="Edm.String" MaxLength="20"/>
+                <Property Name="Ship_From" Type="Edm.String" MaxLength="20"/>
+                <Property Name="From_Address" Type="Edm.String" MaxLength="20"/>
+                <Property Name="Ship_To" Type="Edm.String" MaxLength="20"/>
+                <Property Name="To_Address" Type="Edm.String" MaxLength="20"/>
+                <Property Name="Carrier" Type="Edm.String" MaxLength="20"/>
+                <Property Name="Ext_Id" Type="Edm.String" MaxLength="20"/>
+                <Property Name="Int_Id" Type="Edm.String" MaxLength="20"/>
+                <Property Name="Status" Type="Edm.String" MaxLength="20"/>
+                <Property Name="Ref_Id" Type="Edm.String" MaxLength="20"/>
+                <Property Name="Ref_Date" Type="Edm.String" MaxLength="20"/>
+                <Property Name="Notes" Type="Edm.String" MaxLength="20"/>
+                <Property Name="Priority" Type="Edm.String" MaxLength="20"/>
+                <Property Name="Storage_Loc" Type="Edm.String" MaxLength="20"/>
+                <Property Name="Bin" Type="Edm.String" MaxLength="20"/>
+                <Property Name="Delivery_Location" Type="Edm.String" MaxLength="20"/>
+                <Property Name="Package_Type" Type="Edm.String" MaxLength="20"/>
+                <Property Name="Ship_To_Location" Type="Edm.String" MaxLength="20"/>
+            </EntityType>
             <EntityType Name="Users">
                 <Key>
                     <PropertyRef Name="ID"/>
@@ -119,6 +147,12 @@
                 <Property Name="LocationStatus" Type="Edm.String" MaxLength="50"/>
                 <Property Name="LocationRemarks" Type="Edm.String" MaxLength="255"/>
             </EntityType>
+            <Function Name="activeCarriersCount" IsBound="false" IsComposable="false">
+                <ReturnType Type="Edm.Int32"/>
+            </Function>
+            <Annotations Target="imailservice.All_Packages/ID">
+                <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+            </Annotations>
             <Annotations Target="imailservice.Users/ID">
                 <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
             </Annotations>

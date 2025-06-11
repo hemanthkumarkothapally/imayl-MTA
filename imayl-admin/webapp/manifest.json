@@ -62,7 +62,8 @@
       "minUI5Version": "1.136.1",
       "libs": {
         "sap.m": {},
-        "sap.ui.core": {}
+        "sap.ui.core": {},
+        "sap.ui.unified": {}
       }
     },
     "contentDensities": {
@@ -79,6 +80,11 @@
       "requestpackageModel": {
         "type": "sap.ui.model.json.JSONModel",
         "uri": "model/employees.json"
+      },
+      "ImaylModel": {
+        "type": "sap.ui.model.json.JSONModel",
+        "uri": "model/imaylModel.json",
+        "settings": {}
       },
       "": {
         "dataSource": "mainService",

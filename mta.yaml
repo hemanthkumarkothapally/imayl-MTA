@@ -43,23 +43,10 @@ modules:
     build-result: resources
     requires:
     - artifacts:
-      - comdbsduimaylsduser.zip
-      name: comdbsduimaylsduser
-      target-path: resources/
-    - artifacts:
       - comdbadminimayladmin.zip
       name: comdbadminimayladmin
       target-path: resources/
-- name: comdbsduimaylsduser
-  type: html5
-  path: imayl-sduser
-  build-parameters:
-    build-result: dist
-    builder: custom
-    commands:
-    - npm install
-    - npm run build:cf
-    supported-platforms: []
+
 - name: comdbadminimayladmin
   type: html5
   path: imayl-admin
