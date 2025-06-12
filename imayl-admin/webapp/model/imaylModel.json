@@ -143,11 +143,16 @@
           { "label": "Remarks", "property": "LocationRemarks"},
           { "label": "Status", "property": "LocationStatus" }        
         ],
+        "Email_table_columns": [
+          { "label": "Status Name", "property": "Status_Name" },
+          { "label": "Template Name", "property": "Name"},
+          { "label": "Template Description", "property": "Template_Description"}
+        ],
         "Email":{
           "Code"                 : "",
           "Name"                 : "",
           "Template_Description" : "",
-          "Is_Active"            : "",
+          "Is_Active"            : false,
           "Status_Name"          : "",
           "Place_Holder"         : "",
           "Subject"              : "",

@@ -2831,8 +2831,8 @@
                                 />
                             </Toolbar>
                         </customHeader>
-                        <table:Table selectionMode="None">
-                            <table:columns>
+                        <table:Table id="Emails_table" rows="{/Emails}" selectionMode="None">
+                            <!-- <table:columns>
                                 <table:Column filterProperty="color">
                                     <Label text="Status Name" />
                                     <table:template>
@@ -2877,7 +2877,7 @@
                                         </HBox>
                                     </table:template>
                                 </table:Column>
-                            </table:columns>
+                            </table:columns> -->
                         </table:Table>
                     </Page>
                 </pages>

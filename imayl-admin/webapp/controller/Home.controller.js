@@ -221,11 +221,10 @@ sap.ui.define([
 
                 case "6":
                     oNavContainer.to(this.byId("UserLogpage"));
-                    this._applySearchFilter("userstable");
                     break;
                 case "7":
                     oNavContainer.to(this.byId("EmailTemplatepage"));
-                    this._applySearchFilter("userstable");
+                    this._buildSetupTables("Emails_table", "/Email_table_columns");
                     break;
 
                 default:
@@ -270,6 +269,10 @@ sap.ui.define([
                     case "Delivery_Locations_table":
                         oEditHandler = this.onEditDeliveryLocations.bind(this);
                         break;
+                    case "Emails_table":
+                        oEditHandler = this.onEditEmail.bind(this);
+                        break;
+
                 }
                 // Add Action column
                 var oActionColumn = new sap.ui.table.Column({
@@ -803,19 +806,49 @@ sap.ui.define([
         },
         onAddEmail: function () {
             if (!this.CreateEmailDialog) {
-                this.CreateEmailDialog = sap.ui.xmlfragment("com.db.admin.imayladmin.view.CreateEmail", this);
+                this.CreateEmailDialog = sap.ui.xmlfragment("CreateEmailDialogId","com.db.admin.imayladmin.view.CreateEmail", this);
                 this.getView().addDependent(this.CreateEmailDialog);
             }
             
             let oImaylmodel= this.getOwnerComponent().getModel("ImaylModel").getData();
-             // Create a deep copy using jQuery.extend
             this._initialImaylModel = jQuery.extend(true, {}, oImaylmodel);
             this.CreateEmailDialog.open();
         },
+        onEditEmail:function(oEvent){
+            if (!this.CreateEmailDialog) {
+                this.CreateEmailDialog = sap.ui.xmlfragment("CreateEmailDialogId","com.db.admin.imayladmin.view.CreateEmail", this);
+                this.getView().addDependent(this.CreateEmailDialog);
+            }
+            let oImaylmodel= this.getOwnerComponent().getModel("ImaylModel").getData();
+            this._initialImaylModel = jQuery.extend(true, {}, oImaylmodel);
+
+            let oModel=this.getOwnerComponent().getModel("ImaylModel");
+            let oData = oEvent.getSource().getBindingContext().getObject();
+            this.getOwnerComponent().getModel("ImaylModel").setProperty("/Email",oData)
+            this.CreateEmailDialog.open();
+
+        },
         oncloseEmail:function(){
-            console.log(this.getOwnerComponent().getModel("ImaylModel"));
-            this.getOwnerComponent().getModel("ImaylModel").setProperty("/Email", this._initialImaylModel.Email)
+            let sEmail_body=sap.ui.core.Fragment.byId("CreateEmailDialogId", "Email_Body").getValue();
+            console.log(sEmail_body);
+            this.getOwnerComponent().getModel("ImaylModel").setProperty("/Email", this._initialImaylModel.Email);
+            sap.ui.core.Fragment.byId("CreateEmailDialogId", "Email_Body").setValue("")
+            sap.ui.core.Fragment.byId("CreateEmailDialogId", "Email_SMS").setValue("")
             this.CreateEmailDialog.close();
+        },
+        onSaveEmail:function(){
+            let oModel=this.getOwnerComponent().getModel("ImaylModel");
+            let sEmail_body=sap.ui.core.Fragment.byId("CreateEmailDialogId", "Email_Body").getValue();
+            let sSMS_Text=sap.ui.core.Fragment.byId("CreateEmailDialogId", "Email_SMS").getValue();
+            oModel.setProperty("/Email/Email_Body", sEmail_body);
+            oModel.setProperty("/Email/SMS_Text", sSMS_Text);
+            let oModel_default = this.getView().getModel();
+            let oEmailBind = oModel_default.bindList("/Emails");
+            oEmailBind.create(oModel.getProperty("/Email"));
+            this.CreateEmailDialog.close();
+            oModel.setProperty("/Email", this._initialImaylModel.Email);
+            sap.ui.core.Fragment.byId("CreateEmailDialogId", "Email_Body").setValue("");
+            sap.ui.core.Fragment.byId("CreateEmailDialogId", "Email_SMS").setValue("");
         },
         onAddCarrier: function () {
             let oCarriers = {
@@ -1288,20 +1321,20 @@ sap.ui.define([
                 case "Package_Types_table":
                     this._DeleteData(sPath, "Package_Types")
                     break;
-                case "Package_Statuses_delete":
+                case "Package_Statuses_table":
                     this._DeleteData(sPath, "Package_Statuses")
                     break;
-                case "Locations_delete":
+                case "Locations_table":
                     this._DeleteData(sPath, "Locations")
                     break;
-                case "Delivery_Locations_delete":
+                case "Delivery_Locations_table":
                     this._DeleteData(sPath, "Delivery_Locations")
                     break;
-                case "Roles_delete":
+                case "Roles_table":
                     this._DeleteData(sPath, "Roles")
                     break;
-                case "Carrie_delete":
-                    this._DeleteData("/newCarrier", "/Carriers")
+                case "Emails_table":
+                    this._DeleteData(sPath, "/Emails")
                     break;
 
             }
