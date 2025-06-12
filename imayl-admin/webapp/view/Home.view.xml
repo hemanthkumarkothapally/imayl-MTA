@@ -1318,13 +1318,6 @@
                             </VBox>
                         </layout:Grid>
                         <table:Table selectionMode="None">
-                            <!-- <table:extension><OverflowToolbar >
-                        <ToolbarSpacer ></ToolbarSpacer>
-                        <Button
-                                                    icon="sap-icon://action-settings"
-                                                    press="onOpenColumnftlter"
-                                                />
-                        </OverflowToolbar></table:extension> -->
                             <table:columns>
                                 <table:Column filterProperty="color">
                                     <Label text="Color Code" />
@@ -2075,12 +2068,6 @@
                                 />
                                 <ToolbarSpacer />
 
-                                <!-- <Button icon="sap-icon://refresh" />
-                                <Button
-                                    icon="sap-icon://filter"
-                                    text="Filter"
-                                    press="onFilterselection"
-                                /> -->
                                 <Button
                                     icon="sap-icon://add"
                                     press="onCreateUser"
@@ -2242,11 +2229,7 @@
                                         <Title text="Products" />
 
                                         <ToolbarSpacer />
-                                        <!-- <Button
-                                            icon="sap-icon://decline"
-                                            tooltip="Clear all filters"
-                                            press="clearAllFilters"
-                                        /> -->
+                                        
                                         <Button
                                             icon="sap-icon://action-settings"
                                             press="onOpenColumnftlter"
@@ -2721,10 +2704,6 @@
                                     icon="sap-icon://excel-attachment"
                                     tooltip="Download Excel"
                                 />
-                                <!-- <Button
-                                    icon="sap-icon://action-settings"
-                                    type="Accept"
-                                /> -->
                             </Toolbar>
                         </customHeader>
                         <layout:Grid>
@@ -2751,13 +2730,6 @@
                             </VBox>
                         </layout:Grid>
                         <table:Table selectionMode="None">
-                            <!-- <table:extension><OverflowToolbar >
-                        <ToolbarSpacer ></ToolbarSpacer>
-                        <Button
-                                                    icon="sap-icon://action-settings"
-                                                    press="onOpenColumnftlter"
-                                                />
-                        </OverflowToolbar></table:extension> -->
                             <table:columns>
                                 <table:Column filterProperty="color">
                                     <Label text="User Name" />
@@ -2832,53 +2804,7 @@
                             </Toolbar>
                         </customHeader>
                         <table:Table id="Emails_table" rows="{/Emails}" selectionMode="None">
-                            <!-- <table:columns>
-                                <table:Column filterProperty="color">
-                                    <Label text="Status Name" />
-                                    <table:template>
-                                        <Text
-                                            text="color"
-                                            wrapping="false"
-                                        />
-                                    </table:template>
-                                </table:Column>
-                                <table:Column filterProperty="color">
-                                    <Label text="Template Name" />
-                                    <table:template>
-                                        <Text
-                                            text="color"
-                                            wrapping="false"
-                                        />
-                                    </table:template>
-                                </table:Column>
-                                <table:Column filterProperty="color">
-                                    <Label text="Template Description" />
-                                    <table:template>
-                                        <Text
-                                            text="color"
-                                            wrapping="false"
-                                        />
-                                    </table:template>
-                                </table:Column>
-                                <table:Column width="4rem">
-                                    <Label text="Action" />
-                                    <table:template>
-                                        <HBox justifyContent="SpaceBetween">
-                                            <core:Icon
-                                                src="sap-icon://edit"
-                                                color="blue"
-                                                press="onAddRow"
-                                            />
-                                            <core:Icon
-                                                src="sap-icon://sys-minus"
-                                                color="red"
-                                                press="onDeleteRow"
-                                            />
-                                        </HBox>
-                                    </table:template>
-                                </table:Column>
-                            </table:columns> -->
-                        </table:Table>
+                           </table:Table>
                     </Page>
                 </pages>
             </NavContainer>
